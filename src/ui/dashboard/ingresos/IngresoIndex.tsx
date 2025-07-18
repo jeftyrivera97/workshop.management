@@ -2,8 +2,10 @@ import { useIngresoStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
 import { InfoInput } from "../../layouts";
-import LineChartComponent from "../../layouts/components/LineChartComponent";
+import LineChartComponent from "../../layouts/shared/LineChartComponent";
 import { DataTable } from "../../layouts";
+import { getDateData } from "../../../helpers";
+
 
 export const IngresoIndex = () => {
   const {
@@ -14,19 +16,11 @@ export const IngresoIndex = () => {
     dataGraficaMes,
     totalMesAnterior,
     categoriasMes,
-    tiposMes,
+    tiposMes
   } = useIngresoStore();
 
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().toLocaleDateString("es-ES", {
-    month: "long",
-  });
-  // Calcular el mes anterior
-  const previousMonthDate = new Date();
-  previousMonthDate.setMonth(previousMonthDate.getMonth() - 1);
-  const previousMonth = previousMonthDate.toLocaleDateString("es-ES", {
-    month: "long",
-  });
+  const { currentMonth, currentYear, previousMonth } = getDateData();
+
 
   return (
     <div>

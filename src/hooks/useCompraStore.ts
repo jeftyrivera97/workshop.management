@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch, useSelector } from "react-redux";
 import adminApi from "../api/adminApi";
-import { onIngresoError, onIngresoFill, onIngresoLoading } from "../store";
+import { onCompraError, onCompraFill, onCompraLoading } from "../store";
 import { ApiError } from "../interfaces";
 
-
-
-export const useIngresoStore = () => {
+export const useCompraStore = () => {
   const {
     status,
     loading,
-    dataTable,
+    data,
     errorMessage,
     pagination,
     tableHeaders,
@@ -23,11 +21,11 @@ export const useIngresoStore = () => {
     totalMesAnterior,
     tiposMes,
     categoriasMes,
-  } = useSelector((state: any) => state.ingreso);
+  } = useSelector((state: any) => state.compra);
   const dispatch = useDispatch();
 
   const startLoading = async (page = 1, module = "") => {
-    dispatch(onIngresoLoading());
+    dispatch(onCompraLoading());
     try {
       const token = localStorage.getItem("token");
       const resp = await adminApi.get(`/${module}?page=${page}`, {
@@ -36,25 +34,24 @@ export const useIngresoStore = () => {
         },
       });
       console.log(resp);
-      dispatch(onIngresoFill(resp.data));
-
+      dispatch(onCompraFill(resp.data));
     } catch (error) {
-          const apiError = error as ApiError;
-          const errorMessage =
-            apiError.response?.data?.message ||
-            apiError.message ||
-            "Error desconocido al cargar los datos";
-    
-          dispatch(onIngresoError(`Error al cargar los datos: ${errorMessage}`));
-          throw new Error(`Error al cargar los datos: ${errorMessage}`);
-        }
+      const apiError = error as ApiError;
+      const errorMessage =
+        apiError.response?.data?.message ||
+        apiError.message ||
+        "Error desconocido al cargar los datos";
+
+      dispatch(onCompraError(`Error al cargar los datos: ${errorMessage}`));
+      throw new Error(`Error al cargar los datos: ${errorMessage}`);
+    }
   };
 
   return {
     //* Propiedades
     errorMessage,
     status,
-    dataTable,
+    data,
     loading,
     pagination,
     tableHeaders,

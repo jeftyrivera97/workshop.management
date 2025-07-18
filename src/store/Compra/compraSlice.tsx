@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const ingresoSlice = createSlice({
-    name: 'ingreso',
+export const compraSlice = createSlice({
+    name: 'compra',
     initialState: {
         moduleName: '',
         moduleTitle: '',
         tableHeaders: [],
-        dataTable: [],
+        data: [],
         pagination: {},
         loading: false,
         status: 'not-loaded',
@@ -20,20 +20,20 @@ export const ingresoSlice = createSlice({
         tiposMes: [],
     },
     reducers: {
-        onIngresoLoading: (state) => {
+        onCompraLoading: (state) => {
             state.loading = true;
             state.status = 'loading';
             state.errorMessage = undefined;
-            state.dataTable = [];
+            state.data = [];
             state.pagination = {};
         },
-        onIngresoFill: (state, { payload }) => {
+        onCompraFill: (state, { payload }) => {
             state.loading = false;
             state.errorMessage = undefined;
             state.status = 'loaded';
             state.moduleName = payload.moduleName || '';
             state.moduleTitle = payload.moduleTitle || '';
-            state.dataTable = payload.data || [];
+            state.data = payload.data || [];
             state.pagination = payload ||{} ;
             state.tableHeaders = payload.tableHeaders || [];
             state.counter = payload.contador || [];
@@ -44,13 +44,13 @@ export const ingresoSlice = createSlice({
             state.tiposMes = payload.tiposMes || [];
             state.categoriasMes = payload.categoriasMes || [];
         },
-        onIngresoError: (state, { payload }) => {
+        onCompraError: (state, { payload }) => {
             state.loading = false;
             state.status = 'not-loaded';
             state.errorMessage = payload;
             state.moduleName = '';
             state.moduleTitle = '';
-            state.dataTable = [];
+            state.data = [];
             state.pagination = {};
             state.tableHeaders = [];
             state.counter = 0;
@@ -67,4 +67,4 @@ export const ingresoSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { onIngresoLoading, onIngresoFill, onIngresoError } = ingresoSlice.actions;
+export const { onCompraLoading, onCompraFill, onCompraError } = compraSlice.actions;

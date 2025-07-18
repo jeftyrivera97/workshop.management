@@ -1,18 +1,25 @@
 import { useEffect } from "react";
-import { Ingreso } from "../../../../types";
 import { useIngresoStore } from "../../../../hooks";
+import { DataTable } from "../../../../interfaces/Ingreso";
+import { getDateData } from "../../../../helpers";
 
 export const IndexTable = () => {
-  const { startLoading, data, pagination, loading, tableHeaders } =
+  const { startLoading, dataTable, pagination, loading, tableHeaders } =
     useIngresoStore();
 
   useEffect(() => {
     startLoading(1, "ingreso");
-  }, []);
+  }, []); // Add startLoading dependency
 
   const handlePageChange = (page: number) => {
     startLoading(page, "ingreso");
   };
+
+  const {formatDate} = getDateData();
+
+  // Helper function to format dates safely
+
+
   return (
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 ml-4 mr-4 mb-2">
       <div className="p-4 border-b border-base-content/10">
@@ -21,7 +28,7 @@ export const IndexTable = () => {
         </h3>
       </div>
       <table className="table table-zebra table-pin-rows">
-        {/* Header mejorado */}
+        {/* header  */}
         <thead>
           <tr className="bg-base-200/50 text-base-content">
             <th className="font-semibold">
@@ -36,31 +43,33 @@ export const IndexTable = () => {
           </tr>
         </thead>
 
-        {/* Body mejorado */}
+        {/* Body  */}
         <tbody>
-          {data.map((element: Ingreso) => (
-            <tr
-              key={element.id}
-              className="hover:bg-base-200/30 transition-colors duration-200"
-            >
-              <th className="font-mono text-primary">#{element.id}</th>
-              <td className="font-medium">{element.fecha}</td>
-              <td className="max-w-xs truncate">{element.descripcion}</td>
-              <td>
-                <span>
-                  {Array.isArray(element.categoria)
-                    ? element.categoria[0]?.descripcion || "Sin categoría"
-                    : element.categoria?.descripcion || "Sin categoría"}
-                </span>
-              </td>
-              <td className="font-bold text-primary">
-                {new Intl.NumberFormat("es-HN", {
-                  style: "currency",
-                  currency: "HNL",
-                }).format(Number(element.total) || 0)}
+          {dataTable && dataTable.length > 0 ? (
+            dataTable.map((element: DataTable) => (
+              <tr
+                key={element.id}
+                className="hover:bg-base-200/30 transition-colors duration-200"
+              >
+                <th className="font-mono text-primary">#{element.id}</th>
+                <td className="font-medium">{formatDate(element.fecha)}</td>
+                <td className="max-w-xs truncate">{element.descripcion}</td>
+                <td className="max-w-xs truncate">{element.categoria.descripcion}</td>
+                <td className="font-bold text-primary">
+                  {new Intl.NumberFormat("es-HN", {
+                    style: "currency",
+                    currency: "HNL",
+                  }).format(Number(element.total) || 0)}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="text-center py-4">
+                {loading ? "Cargando..." : "No hay datos disponibles"}
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
       {pagination && pagination.meta && (

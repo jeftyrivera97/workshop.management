@@ -9,6 +9,7 @@ import {
   Area,
   ComposedChart,
 } from "recharts";
+import { getDateData } from "../../../helpers";
 
 interface ChartData {
   descripcion: string;
@@ -33,9 +34,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-  const currentYear = new Date().getFullYear();
-
 export default function LineChartComponent({ data }: { data: ChartData[] }) {
+  const { currentYear } = getDateData();
+
   return (
     <div className="bg-base-100 p-6 rounded-box shadow-2xl border border-gray-600/20 hover:shadow-2xl transition-all duration-300">
       <div className="flex items-center justify-between mb-6">
@@ -46,7 +47,9 @@ export default function LineChartComponent({ data }: { data: ChartData[] }) {
           <p className="text-gray-400 text-sm">Tendencia mensual</p>
         </div>
         <div className="flex gap-2">
-          <div className="badge badge-primary text-gray-100 font-semibold">Actualizado</div>
+          <div className="badge badge-primary text-gray-100 font-semibold">
+            Actualizado
+          </div>
           <div className="badge badge-secondary text-gray-100 font-semibold">
             {currentYear}
           </div>
@@ -60,11 +63,7 @@ export default function LineChartComponent({ data }: { data: ChartData[] }) {
         >
           <defs>
             <linearGradient id="accentGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="0%"
-                stopColor="hsl(var(--a))"
-                stopOpacity={0.7}
-              />
+              <stop offset="0%" stopColor="hsl(var(--a))" stopOpacity={0.7} />
               <stop
                 offset="100%"
                 stopColor="hsl(var(--a))"
@@ -72,11 +71,7 @@ export default function LineChartComponent({ data }: { data: ChartData[] }) {
               />
             </linearGradient>
             <linearGradient id="secondaryGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="0%"
-                stopColor="hsl(var(--s))"
-                stopOpacity={0.5}
-              />
+              <stop offset="0%" stopColor="hsl(var(--s))" stopOpacity={0.5} />
               <stop
                 offset="100%"
                 stopColor="hsl(var(--s))"
