@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDispatch, useSelector } from "react-redux";
+
+import { useAppDispatch, useAppSelector } from "./redux";
 import adminApi from "../api/adminApi";
 import { onCompraError, onCompraFill, onCompraLoading } from "../store";
 import { ApiError } from "../interfaces";
@@ -8,7 +8,7 @@ export const useCompraStore = () => {
   const {
     status,
     loading,
-    data,
+    tableData,
     errorMessage,
     pagination,
     tableHeaders,
@@ -21,10 +21,14 @@ export const useCompraStore = () => {
     totalMesAnterior,
     tiposMes,
     categoriasMes,
-  } = useSelector((state: any) => state.compra);
-  const dispatch = useDispatch();
+  } = useAppSelector((state) => state.compra);
+  const dispatch = useAppDispatch();
 
-  const startLoading = async (page = 1, module = "") => {
+  // Carga inicial completa (dashboard + tabla)
+  const startLoading = async (
+    page: number = 1,
+    module: string = ""
+  ): Promise<void> => {
     dispatch(onCompraLoading());
     try {
       const token = localStorage.getItem("token");
@@ -33,8 +37,49 @@ export const useCompraStore = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(resp);
+      console.log("startLoading response:", resp);
       dispatch(onCompraFill(resp.data));
+    } catch (error) {
+      const apiError = error as ApiError;
+      const errorMessage =
+        apiError.response?.data?.message ||
+        apiError.message ||
+        "Error desconocido al cargar los datos";
+
+      dispatch(onCompraError(`Error al cargar los datos: ${errorMessage}`));
+      throw new Error(`Error al cargar los datos: ${errorMessage}`);
+    }
+  };
+
+  //Solo paginación de tabla (sin recargar dashboard)
+  const nextPageLoading = async (
+    page: number = 1,
+    module: string = ""
+  ): Promise<void> => {
+    try {
+      const token = localStorage.getItem("token");
+      const resp = await adminApi.get(`/${module}?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Solo actualizar datos de tabla sin resetear el dashboard
+      dispatch(
+        onCompraFill({
+          ...resp.data,
+          // Mantener datos del dashboard existentes
+          totalMes,
+          totalAnual,
+          dataGraficaMes,
+          totalMesAnterior,
+          tiposMes,
+          categoriasMes,
+          counter,
+          moduleName,
+          moduleTitle,
+        })
+      );
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
@@ -51,7 +96,7 @@ export const useCompraStore = () => {
     //* Propiedades
     errorMessage,
     status,
-    data,
+    tableData: tableData || [],
     loading,
     pagination,
     tableHeaders,
@@ -60,12 +105,13 @@ export const useCompraStore = () => {
     moduleTitle,
     totalMes,
     totalAnual,
-    dataGraficaMes,
+    dataGraficaMes: dataGraficaMes || [],
     totalMesAnterior,
-    tiposMes,
-    categoriasMes,
+    tiposMes: tiposMes || [],
+    categoriasMes: categoriasMes || [],
 
     //* Métodos
     startLoading,
+    nextPageLoading,
   };
 };

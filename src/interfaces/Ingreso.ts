@@ -1,100 +1,86 @@
 
-export interface Data {
-  dataTable: DataTable[];
-  links: Links;
-  meta: Meta;
-  tableHeaders: { [key: string]: string };
-  contador: number;
-  moduleName: string;
-  moduleTitle: string;
-  totalMes: string;
-  totalAnual: string;
-  dataGraficaMes: DataGraficaMes[];
+export interface IngresoData {
+  data:             IngresoTableData[];
+  links:            IngresoLinks;
+  meta:             IngresoMeta;
+  tableHeaders:     { [key: string]: string };
+  contador:         number;
+  moduleName:       string;
+  moduleTitle:      string;
+  totalMes:         string;
+  totalAnual:       string;
+  dataGraficaMes:   IngresoDataGraficaMes[];
   totalMesAnterior: string;
-  tiposMes: categoriesData[];
-  categoriasMes: categoriesData[];
+  tiposMes:         IngresoInfoTableData[];
+  categoriasMes:    IngresoInfoTableData[];
 }
 
-export interface categoriesData {
+export interface IngresoInfoTableData {
   descripcion: string;
-  total: number;
-  porcentaje: string;
+  total:       number;
+  porcentaje:  string;
 }
 
-export interface DataTable {
-  id: number;
-  fecha: Date;
+export interface IngresoTableData {
+  id:          number;
+  fecha:       Date;
   descripcion: string;
-  categoria: Categoria;
-  total: number;
-  estado: Estado;
-  usuario: Usuario;
-  created_at: Date;
-  updated_at: Date;
+  categoria:   IngresoCategoria;
+  total:       number;
+  estado:      IngresoEstado;
+  usuario:     IngresoUsuario;
+  created_at:  Date;
+  updated_at:  Date;
 }
 
-export interface Categoria {
-  id: number;
+export interface IngresoCategoria {
+  id:          number;
   descripcion: string;
-  id_tipo?: Categoria[];
-  id_estado: Estado[];
-  id_usuario: Usuario[];
-  created_at: string;
-  updated_at: string;
+  id_tipo?:    IngresoCategoria[];
+  id_estado:   IngresoEstado[];
+  id_usuario:  IngresoUsuario[];
+  created_at:  string;
+  updated_at:  string;
 }
 
-export interface Estado {
-  id: number;
-  descripcion: Descripcion;
+export interface IngresoEstado {
+  id:          number;
+  descripcion: string;
 }
 
-export enum Descripcion {
-  Activo = "Activo",
-}
-
-export interface Usuario {
-  id: number;
-  name: Name;
-  email: Email;
+export interface IngresoUsuario {
+  id:         number;
+  name:       string;
+  email:      string;
   created_at: null;
   updated_at: null;
 }
 
-export enum Email {
-  AdminTallerhSite = "admin@tallerh.site",
-  SistemaTallerhSite = "sistema@tallerh.site",
-}
-
-export enum Name {
-  LedaHernandez = "Leda Hernandez",
-  Sistema = "Sistema ",
-}
-
-export interface DataGraficaMes {
+export interface IngresoDataGraficaMes {
   descripcion: string;
-  total: number;
+  total:       number;
 }
 
-export interface Links {
+export interface IngresoLinks {
   first: string;
-  last: string;
-  prev: null;
-  next: null;
+  last:  string;
+  prev:  null;
+  next:  string;
 }
 
-export interface Meta {
+export interface IngresoMeta {
   current_page: number;
-  from: number;
-  last_page: number;
-  links: Link[];
-  path: string;
-  per_page: number;
-  to: number;
-  total: number;
+  from:         number;
+  last_page:    number;
+  links:        IngresoLink[];
+  path:         string;
+  per_page:     number;
+  to:           number;
+  total:        number;
 }
 
-export interface Link {
-  url: null | string;
-  label: string;
+export interface IngresoLink {
+  url:    null | string;
+  label:  string;
   active: boolean;
 }

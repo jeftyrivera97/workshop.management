@@ -1,15 +1,17 @@
-import { useIngresoStore } from "../../../../hooks";
-import { IngresoTableData } from "../../../../interfaces/Ingreso";
+
+import { useCompraStore } from "../../../../hooks";
+import { CompraTableData } from "../../../../interfaces/Compra";
 import { getDateData } from "../../../../helpers";
 
 export const IndexTable = () => {
-  const { nextPageLoading, tableData, pagination, loading, tableHeaders } =
-    useIngresoStore();
+  const { nextPageLoading, tableData, pagination, loading, tableHeaders } = useCompraStore();
 
   const handlePageChange = (page: number) => {
-    nextPageLoading(page, "ingreso");
+    nextPageLoading(page, "compra"); // 
   };
+
   const { formatDate } = getDateData();
+
 
   return (
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 ml-4 mr-4 mb-2">
@@ -30,20 +32,21 @@ export const IndexTable = () => {
               ))}
           </tr>
         </thead>
+
         {/* Body  */}
         <tbody>
           {tableData && tableData.length > 0 ? (
-            tableData.map((element: IngresoTableData) => (
+            tableData.map((element: CompraTableData) => (
               <tr
                 key={element.id}
                 className="hover:bg-base-200/30 transition-colors duration-200"
               >
-                <th className="font-mono text-primary">#{element.id}</th>
+                 <th className="font-mono text-primary">{element.id}</th>
+                <th className="font-mono text-primary">{element.codigo_compra}</th>
                 <td className="font-medium">{formatDate(element.fecha)}</td>
                 <td className="max-w-xs truncate">{element.descripcion}</td>
-                <td className="max-w-xs truncate">
-                  {element.categoria.descripcion}
-                </td>
+                <td className="max-w-xs truncate">{element.categoria.descripcion}</td>
+                <td className="max-w-xs truncate">{element.proveedor.descripcion}</td>
                 <td className="font-bold text-primary">
                   {new Intl.NumberFormat("es-HN", {
                     style: "currency",
@@ -61,7 +64,7 @@ export const IndexTable = () => {
           )}
         </tbody>
       </table>
-      {pagination && pagination.meta && (
+       {pagination && pagination.meta && (
         <div className="flex justify-center mt-4">
           <div className="join">
             {/* Botón Anterior */}
@@ -74,8 +77,9 @@ export const IndexTable = () => {
             </button>
             {/* Página actual */}
             <button className="join-item btn btn-active" disabled>
-              Página {pagination.meta!.current_page}
+              Página {pagination.meta.current_page}
             </button>
+
             {/* Botón Siguiente */}
             <button
               className="join-item btn"

@@ -1,42 +1,65 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// ✅ Definir interfaces para el estado de autenticación
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface AuthState {
+  status: 'not-authenticated' | 'checking' | 'authenticated';
+  user: User | null;
+  errorMessage: string | null;
+}
+const initialState: AuthState = {
+  status: 'not-authenticated',
+  user: null,
+  errorMessage: null,
+};
 
 export const authSlice = createSlice({
-    name: 'auth',
-    initialState: {
-        status: 'not-authenticated', // 'authenticated','not-authenticated',
-        user: {},
-        errorMessage: undefined,
+  name: 'auth',
+  initialState,
+  reducers: {
+    onChecking: (state) => {
+      state.status = 'checking';
+      state.user = null;
+      state.errorMessage = null;
     },
-    reducers: {
-        onChecking: (state) => {
-            state.status = 'checking';
-            state.user = {};
-            state.errorMessage = undefined;
-        },
-        onLogin: (state, { payload }) => {
-            state.status = 'authenticated';
-            state.user = payload;
-            state.errorMessage = undefined;
-        },
-        onLogout: (state) => {
-            state.status = 'not-authenticated';
-            state.user = {};
-            state.errorMessage = undefined;
-        },
-        onLoginWindow: (state) => {
-            state.user = {};
-            state.errorMessage = undefined;
-        },
-        clearErrorMessage: (state) => {
-            state.errorMessage = undefined;
-        }, 
-        onErrorLogin: (state, { payload }) => {
-            state.errorMessage = payload;
-        }
+    onLogin: (state, action: PayloadAction<User>) => {
+      state.status = 'authenticated';
+      state.user = action.payload;
+      state.errorMessage = null;
+    },
+    onLogout: (state) => {
+      state.status = 'not-authenticated';
+      state.user = null;
+      state.errorMessage = null;
+    },
+    onLoginWindow: (state) => {
+      state.user = null;
+      state.errorMessage = null;
+    },
+    clearErrorMessage: (state) => {
+      state.errorMessage = null;
+    },
+    onErrorLogin: (state, action: PayloadAction<string>) => {
+      state.status = 'not-authenticated';
+      state.errorMessage = action.payload;
     }
+  }
 });
 
+export const { 
+  onChecking, 
+  onLogin, 
+  onLogout, 
+  clearErrorMessage, 
+  onErrorLogin, 
+  onLoginWindow 
+} = authSlice.actions;
 
-// Action creators are generated for each case reducer function
-export const { onChecking, onLogin, onLogout, clearErrorMessage, onErrorLogin, onLoginWindow } = authSlice.actions;
 export default authSlice.reducer;
+
+export type { AuthState, User };

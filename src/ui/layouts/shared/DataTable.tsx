@@ -1,20 +1,12 @@
 
-import { useEffect } from "react";
-import { useIngresoStore } from "../../../hooks";
-import { categoriesData } from "../../../interfaces/Ingreso";
+import { InfoTableData } from "../../../interfaces";
 
 interface DataTableProps {
   titulo: string;
-  data: categoriesData[];
+  data: InfoTableData[];
 }
 
 export const DataTable = ({ titulo, data }: DataTableProps) => {
-  const { startLoading } = useIngresoStore();
-
-  useEffect(() => {
-    startLoading(1, "ingreso");
-  }, []);
-
   return (
     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 ml-4 mr-4 mb-2 shadow-sm">
       {/* Header  */}

@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "./redux";
 import adminApi from "../api/adminApi";
-import { onIngresoError, onIngresoFill, onIngresoLoading } from "../store";
+import { onIngresoError, onIngresoFill, onIngresoLoading } from "../store/Ingreso/ingresoSlice";
 import { ApiError } from "../interfaces";
-
-
+import { IngresoData } from "../interfaces/Ingreso";
 
 export const useIngresoStore = () => {
   const {
     status,
     loading,
-    dataTable,
+    tableData,
     errorMessage,
     pagination,
     tableHeaders,
@@ -23,10 +21,15 @@ export const useIngresoStore = () => {
     totalMesAnterior,
     tiposMes,
     categoriasMes,
-  } = useSelector((state: any) => state.ingreso);
-  const dispatch = useDispatch();
+  } = useAppSelector((state) => state.ingreso);
 
-  const startLoading = async (page = 1, module = "") => {
+  const dispatch = useAppDispatch();
+
+  // Carga inicial completa (dashboard + tabla)
+  const startLoading = async (
+    page: number = 1,
+    module: string = ""
+  ): Promise<void> => {
     dispatch(onIngresoLoading());
     try {
       const token = localStorage.getItem("token");
@@ -35,40 +38,70 @@ export const useIngresoStore = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(resp);
-      dispatch(onIngresoFill(resp.data));
-
+      
+      console.log("🔍 API Response:", resp.data);
+      
+      // ✅ El payload ya está tipado como IngresoData
+      dispatch(onIngresoFill(resp.data as IngresoData));
     } catch (error) {
-          const apiError = error as ApiError;
-          const errorMessage =
-            apiError.response?.data?.message ||
-            apiError.message ||
-            "Error desconocido al cargar los datos";
-    
-          dispatch(onIngresoError(`Error al cargar los datos: ${errorMessage}`));
-          throw new Error(`Error al cargar los datos: ${errorMessage}`);
-        }
+      const apiError = error as ApiError;
+      const errorMessage =
+        apiError.response?.data?.message ||
+        apiError.message ||
+        "Error desconocido al cargar los datos";
+      
+      console.error("❌ Error en startLoading:", errorMessage);
+      dispatch(onIngresoError(errorMessage));
+    }
+  };
+
+  //Solo paginación de tabla (sin recargar dashboard)
+  const nextPageLoading = async (
+    page: number = 1,
+    module: string = ""
+  ): Promise<void> => {
+    try {
+      const token = localStorage.getItem("token");
+      const resp = await adminApi.get(`/${module}?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      console.log("🔍 nextPageLoading response:", resp.data);
+      dispatch(onIngresoFill(resp.data as IngresoData));
+    } catch (error) {
+      const apiError = error as ApiError;
+      const errorMessage =
+        apiError.response?.data?.message ||
+        apiError.message ||
+        "Error al cambiar página";
+
+      console.error("❌ Error en nextPageLoading:", errorMessage);
+      dispatch(onIngresoError(errorMessage));
+    }
   };
 
   return {
     //* Propiedades
     errorMessage,
     status,
-    dataTable,
+    tableData: tableData || [],
     loading,
-    pagination,
+    pagination, // ✅ Ahora tipado correctamente
     tableHeaders,
     counter,
     moduleName,
     moduleTitle,
     totalMes,
     totalAnual,
-    dataGraficaMes,
+    dataGraficaMes: dataGraficaMes || [],
     totalMesAnterior,
-    tiposMes,
-    categoriasMes,
+    tiposMes: tiposMes || [],
+    categoriasMes: categoriasMes || [],
 
     //* Métodos
     startLoading,
+    nextPageLoading,
   };
 };
