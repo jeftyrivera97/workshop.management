@@ -1,8 +1,8 @@
 
-import { useAppDispatch, useAppSelector } from "./redux";
-import adminApi from "../api/adminApi";
-import { onCompraError, onCompraFill, onCompraLoading } from "../store";
-import { ApiError } from "../interfaces";
+import { useAppDispatch, useAppSelector } from "../Redux/redux";
+import adminApi from "../../api/adminApi";
+import { onCompraError, onCompraFill, onCompraLoading } from "../../store";
+import { ApiError } from "../../interfaces";
 
 export const useCompraStore = () => {
   const {

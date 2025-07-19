@@ -3,10 +3,10 @@ import {
   onLogin,
   onLoginWindow,
   onLogout,
-} from "../store/Auth/authSlice";
-import adminApi from "../api/adminApi";
-import { ApiError } from "../interfaces";
-import { useAppDispatch, useAppSelector } from './redux';
+} from "../../store/Auth/authSlice";
+import adminApi from "../../api/adminApi";
+import { ApiError } from "../../interfaces";
+import { useAppDispatch, useAppSelector } from '../Redux/redux';
 
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useAppSelector((state) => state.auth);

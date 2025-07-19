@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from "./redux";
-import adminApi from "../api/adminApi";
-import { onIngresoError, onIngresoFill, onIngresoLoading } from "../store/Ingreso/ingresoSlice";
-import { ApiError } from "../interfaces";
-import { IngresoData } from "../interfaces/Ingreso";
+import { useAppDispatch, useAppSelector } from '../Redux/redux';
+import adminApi from "../../api/adminApi";
+import { onIngresoError, onIngresoFill, onIngresoLoading } from "../../store/Ingreso/ingresoSlice";
+import { ApiError } from "../../interfaces";
+import { IngresoData } from "../../interfaces/Ingreso";
 
 export const useIngresoStore = () => {
   const {
