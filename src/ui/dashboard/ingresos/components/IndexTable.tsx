@@ -3,7 +3,7 @@ import { IngresoTableData } from "../../../../interfaces/Ingreso";
 import { getDateData } from "../../../../helpers";
 
 interface IndexTableProps {
-  selectedMonth: string; // ✅ Agregar prop para el mes seleccionado
+  selectedMonth: string; // Agregar prop para el mes seleccionado
 }
 
 export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
@@ -12,7 +12,7 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
 
   // ✅ Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
-    nextPageLoading(page, "ingreso", selectedMonth); // ✅ Agregar filtro
+    nextPageLoading(page, "ingreso", selectedMonth); // Agregar filtro
   };
 
   const { formatDate } = getDateData();

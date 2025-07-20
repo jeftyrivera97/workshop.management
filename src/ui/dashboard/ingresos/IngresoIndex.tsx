@@ -7,6 +7,8 @@ import { DataTable } from "../../layouts";
 import { useEffect, useRef, useState } from "react";
 import { MonthDateInput } from "./../shared/MonthDateInput";
 
+import { getDateData } from "../../../helpers/getDateData";
+
 export const IngresoIndex = () => {
   const {
     startLoading,
@@ -20,79 +22,15 @@ export const IngresoIndex = () => {
     tiposMes,
   } = useIngresoStore();
 
-  // ✅ Estado centralizado en el padre
-  const getCurrentYearMonth = (): string => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    return `${year}-${month}`;
-  };
 
+  const { getCurrentYearMonth, getMonthName, getMonthInfo } = getDateData();
   const [currentSelectedMonth, setCurrentSelectedMonth] = useState<string>(
     getCurrentYearMonth()
   );
 
   const hasLoadedRef = useRef(false);
-
-  // ✅ Función para obtener nombre del mes
-  const getMonthName = (yearMonth: string): string => {
-    if (!yearMonth) return "";
-
-    const monthNames = [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ];
-
-    const [year, month] = yearMonth.split("-");
-    const monthIndex = parseInt(month) - 1;
-
-    return `${monthNames[monthIndex]} ${year}`;
-  };
-
-  // ✅ Función más simple que retorna toda la información
-  const getMonthInfo = (yearMonth: string) => {
-    if (!yearMonth) {
-      const now = new Date();
-      const currentYM = `${now.getFullYear()}-${String(
-        now.getMonth() + 1
-      ).padStart(2, "0")}`;
-      return {
-        currentName: getMonthName(currentYM),
-        previousName: "",
-        year: now.getFullYear(),
-      };
-    }
-
-    const [year, month] = yearMonth.split("-");
-    const currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-    const previousDate = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() - 1,
-      1
-    );
-
-    const previousYM = `${previousDate.getFullYear()}-${String(
-      previousDate.getMonth() + 1
-    ).padStart(2, "0")}`;
-
-    return {
-      currentName: getMonthName(yearMonth),
-      previousName: getMonthName(previousYM),
-      year: parseInt(year),
-    };
-  };
-
   const monthInfo = getMonthInfo(currentSelectedMonth);
+  const selectedMonthName = getMonthName(currentSelectedMonth);
 
   useEffect(() => {
     if (!hasLoadedRef.current) {
@@ -101,14 +39,12 @@ export const IngresoIndex = () => {
     }
   }, []);
 
-  // ✅ Manejar cambios desde el componente hijo
+ 
   const handleMonthSelection = (selectedMonth: string) => {
     console.log("📅 Mes recibido en IngresoIndex:", selectedMonth);
     setCurrentSelectedMonth(selectedMonth); // ✅ Actualizar estado local
     startLoading(1, "ingreso", selectedMonth); // ✅ Cargar datos
   };
-
-  const selectedMonthName = getMonthName(currentSelectedMonth);
 
   return (
     <div>

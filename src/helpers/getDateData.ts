@@ -48,6 +48,45 @@ export const getDateData = () => {
     });
   };
 
+  const getCurrentYearMonth = (): string => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    return `${year}-${month}`;
+  };
+
+  const getMonthInfo = (yearMonth: string) => {
+    if (!yearMonth) {
+      const now = new Date();
+      const currentYM = `${now.getFullYear()}-${String(
+        now.getMonth() + 1
+      ).padStart(2, "0")}`;
+      return {
+        currentName: getMonthName(currentYM),
+        previousName: "",
+        year: now.getFullYear(),
+      };
+    }
+
+    const [year, month] = yearMonth.split("-");
+    const currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+    const previousDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      1
+    );
+
+    const previousYM = `${previousDate.getFullYear()}-${String(
+      previousDate.getMonth() + 1
+    ).padStart(2, "0")}`;
+
+    return {
+      currentName: getMonthName(yearMonth),
+      previousName: getMonthName(previousYM),
+      year: parseInt(year),
+    };
+  };
+
   return {
     currentYear,
     currentMonth,
@@ -57,7 +96,9 @@ export const getDateData = () => {
     //Metodos adicionales
     formatDate,
     getCurrentMonth,
+    getCurrentYearMonth,
     getMonthName,
+    getMonthInfo,
   };
 };
 
