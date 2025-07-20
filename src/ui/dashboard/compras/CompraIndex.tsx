@@ -2,7 +2,7 @@ import { useCompraStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
 import { InfoInput } from "../../layouts";
-import LineChartComponent from "../../layouts/shared/LineChartComponent";
+import LineChartComponent from "../shared/LineChartComponent";
 import { DataTable } from "../../layouts";
 import { getDateData } from "../../../helpers";
 import { useEffect, useRef } from "react";
@@ -25,7 +25,7 @@ export const CompraIndex = () => {
 
   useEffect(() => {
     if (!hasLoadedRef.current) {
-      startLoading(1, "compra");
+      startLoading(1, "compra", "Hola desde COMPRAS");
       hasLoadedRef.current = true;
     }
   }, []);

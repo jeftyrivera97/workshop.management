@@ -14,7 +14,7 @@ adminApi.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`; // Laravel usa típicamente 'Bearer'
+      config.headers['Authorization'] = `Bearer ${token}`; // Laravel usa 'Bearer'
     }
     return config;
   },

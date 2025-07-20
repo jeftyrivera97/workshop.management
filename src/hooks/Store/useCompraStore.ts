@@ -1,4 +1,3 @@
-
 import { useAppDispatch, useAppSelector } from "../Redux/redux";
 import adminApi from "../../api/adminApi";
 import { onCompraError, onCompraFill, onCompraLoading } from "../../store";
@@ -27,12 +26,21 @@ export const useCompraStore = () => {
   // Carga inicial completa (dashboard + tabla)
   const startLoading = async (
     page: number = 1,
-    module: string = ""
+    module: string = "",
+    extraParam?: string | number // ✅ Parámetro adicional
   ): Promise<void> => {
     dispatch(onCompraLoading());
     try {
       const token = localStorage.getItem("token");
-      const resp = await adminApi.get(`/${module}?page=${page}`, {
+      let url = `/${module}?page=${page}`;
+      if (
+        extraParam !== undefined &&
+        extraParam !== null &&
+        extraParam !== ""
+      ) {
+        url += `&extraParam=${extraParam}`;
+      }
+      const resp = await adminApi.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

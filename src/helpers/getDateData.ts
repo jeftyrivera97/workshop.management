@@ -28,6 +28,26 @@ export const getDateData = () => {
     return String(fecha);
   };
 
+  const getCurrentMonth = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    return `${year}-${month}`; // Formato: 2025-07
+  };
+
+  const getMonthName = (yearMonth: string): string => {
+    if (!yearMonth) return "";
+
+    const [year, month] = yearMonth.split("-");
+    const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+
+    // Formatear en español
+    return date.toLocaleDateString("es-ES", {
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   return {
     currentYear,
     currentMonth,
@@ -35,7 +55,9 @@ export const getDateData = () => {
     currentDate,
 
     //Metodos adicionales
-    formatDate
+    formatDate,
+    getCurrentMonth,
+    getMonthName,
   };
 };
 

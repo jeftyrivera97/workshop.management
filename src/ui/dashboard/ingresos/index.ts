@@ -1,1 +1,1 @@
-export * from '../../layouts/shared/DataTable';
+export * from '../shared/DataTable';

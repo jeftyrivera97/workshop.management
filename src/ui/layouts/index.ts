@@ -1,3 +1,3 @@
-export * from './shared/InfoInput';
-export * from './shared/LineChartComponent';
-export * from './shared/DataTable';
+export * from '../dashboard/shared/InfoInput';
+export * from '../dashboard/shared/LineChartComponent';
+export * from '../dashboard/shared/DataTable';

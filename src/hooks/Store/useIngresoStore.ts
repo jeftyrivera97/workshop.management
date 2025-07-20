@@ -1,6 +1,10 @@
-import { useAppDispatch, useAppSelector } from '../Redux/redux';
+import { useAppDispatch, useAppSelector } from "../Redux/redux";
 import adminApi from "../../api/adminApi";
-import { onIngresoError, onIngresoFill, onIngresoLoading } from "../../store/Ingreso/ingresoSlice";
+import {
+  onIngresoError,
+  onIngresoFill,
+  onIngresoLoading,
+} from "../../store/Ingreso/ingresoSlice";
 import { ApiError } from "../../interfaces";
 import { IngresoData } from "../../interfaces/Ingreso";
 
@@ -28,19 +32,28 @@ export const useIngresoStore = () => {
   // Carga inicial completa (dashboard + tabla)
   const startLoading = async (
     page: number = 1,
-    module: string = ""
+    module: string = "",
+    extraParam?: string
   ): Promise<void> => {
     dispatch(onIngresoLoading());
     try {
       const token = localStorage.getItem("token");
-      const resp = await adminApi.get(`/${module}?page=${page}`, {
+      let url = `/${module}?page=${page}`;
+      if (
+        extraParam !== undefined &&
+        extraParam !== null &&
+        extraParam !== ""
+      ) {
+        url += `&extraParam=${extraParam}`;
+      }
+      const resp = await adminApi.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
-      console.log("🔍 API Response:", resp.data);
-      
+
+      console.log("API Response:", resp.data);
+
       // ✅ El payload ya está tipado como IngresoData
       dispatch(onIngresoFill(resp.data as IngresoData));
     } catch (error) {
@@ -49,7 +62,7 @@ export const useIngresoStore = () => {
         apiError.response?.data?.message ||
         apiError.message ||
         "Error desconocido al cargar los datos";
-      
+
       console.error("❌ Error en startLoading:", errorMessage);
       dispatch(onIngresoError(errorMessage));
     }
@@ -58,16 +71,26 @@ export const useIngresoStore = () => {
   //Solo paginación de tabla (sin recargar dashboard)
   const nextPageLoading = async (
     page: number = 1,
-    module: string = ""
+    module: string = "",
+     extraParam?: string
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      const resp = await adminApi.get(`/${module}?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      
+      // ✅ Construir URL con filtro
+      let url = `/${module}?page=${page}`;
+      if (
+        extraParam !== undefined &&
+        extraParam !== null &&
+        extraParam !== ""
+      ) {
+        url += `&extraParam=${extraParam}`;
+      }
+      const resp = await adminApi.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
       console.log("🔍 nextPageLoading response:", resp.data);
       dispatch(onIngresoFill(resp.data as IngresoData));
     } catch (error) {

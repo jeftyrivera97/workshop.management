@@ -2,13 +2,19 @@ import { useIngresoStore } from "../../../../hooks";
 import { IngresoTableData } from "../../../../interfaces/Ingreso";
 import { getDateData } from "../../../../helpers";
 
-export const IndexTable = () => {
+interface IndexTableProps {
+  selectedMonth: string; // ✅ Agregar prop para el mes seleccionado
+}
+
+export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
   const { nextPageLoading, tableData, pagination, loading, tableHeaders } =
     useIngresoStore();
 
+  // ✅ Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
-    nextPageLoading(page, "ingreso");
+    nextPageLoading(page, "ingreso", selectedMonth); // ✅ Agregar filtro
   };
+
   const { formatDate } = getDateData();
 
   return (
