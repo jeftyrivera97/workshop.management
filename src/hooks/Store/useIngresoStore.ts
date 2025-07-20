@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../Redux/redux";
+import { useAppDispatch, useAppSelector } from "../redux/redux";
 import adminApi from "../../api/adminApi";
 import {
   onIngresoError,
@@ -33,18 +33,18 @@ export const useIngresoStore = () => {
   const startLoading = async (
     page: number = 1,
     module: string = "",
-    extraParam?: string
+    dateParam?: string
   ): Promise<void> => {
     dispatch(onIngresoLoading());
     try {
       const token = localStorage.getItem("token");
       let url = `/${module}?page=${page}`;
       if (
-        extraParam !== undefined &&
-        extraParam !== null &&
-        extraParam !== ""
+        dateParam !== undefined &&
+        dateParam !== null &&
+        dateParam !== ""
       ) {
-        url += `&extraParam=${extraParam}`;
+        url += `&dateParam=${dateParam}`;
       }
       const resp = await adminApi.get(url, {
         headers: {
@@ -72,18 +72,18 @@ export const useIngresoStore = () => {
   const nextPageLoading = async (
     page: number = 1,
     module: string = "",
-     extraParam?: string
+     dateParam?: string
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
       // ✅ Construir URL con filtro
       let url = `/${module}?page=${page}`;
       if (
-        extraParam !== undefined &&
-        extraParam !== null &&
-        extraParam !== ""
+        dateParam !== undefined &&
+        dateParam !== null &&
+        dateParam !== ""
       ) {
-        url += `&extraParam=${extraParam}`;
+        url += `&dateParam=${dateParam}`;
       }
       const resp = await adminApi.get(url, {
       headers: {

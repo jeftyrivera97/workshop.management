@@ -6,7 +6,7 @@ import {
 } from "../../store/Auth/authSlice";
 import adminApi from "../../api/adminApi";
 import { ApiError } from "../../interfaces";
-import { useAppDispatch, useAppSelector } from '../Redux/redux';
+import { useAppDispatch, useAppSelector } from '../redux/redux';
 
 export const useAuthStore = () => {
   const { status, user, errorMessage } = useAppSelector((state) => state.auth);

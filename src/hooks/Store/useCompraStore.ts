@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../Redux/redux";
+import { useAppDispatch, useAppSelector } from "../redux/redux";
 import adminApi from "../../api/adminApi";
 import { onCompraError, onCompraFill, onCompraLoading } from "../../store";
 import { ApiError } from "../../interfaces";
@@ -38,7 +38,7 @@ export const useCompraStore = () => {
         extraParam !== null &&
         extraParam !== ""
       ) {
-        url += `&extraParam=${extraParam}`;
+        url += `&dateParam=${extraParam}`;
       }
       const resp = await adminApi.get(url, {
         headers: {

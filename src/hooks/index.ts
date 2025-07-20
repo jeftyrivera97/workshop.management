@@ -1,5 +1,5 @@
 
-export * from './Store/useAuthStore';
-export * from './Forms/useForm';
-export * from './Store/useIngresoStore';
-export * from './Store/useCompraStore';
+export * from './store/useAuthStore';
+export * from './forms/useForm';
+export * from './store/useIngresoStore';
+export * from './store/useCompraStore';
