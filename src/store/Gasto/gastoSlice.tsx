@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  CompraData,
-  CompraTableData,
-  CompraMeta,
-  CompraLinks,
-  CompraDataGraficaMes,
-  CompraInfoTableData,
-  CompraAnalisisMensual,
-} from "../../interfaces/Compra";
+  GastoData,
+  GastoTableData,
+  GastoMeta,
+  GastoLinks,
+  GastoDataGraficaMes,
+  GastoInfoTableData,
+  GastoAnalisisMensual,
+} from "../../interfaces/Gasto";
 
-interface CompraState {
+interface GastoState {
   moduleName: string;
   moduleTitle: string;
   tableHeaders: { [key: string]: string };
-  tableData: CompraTableData[];
+  tableData: GastoTableData[];
   pagination: {
-    meta?: CompraMeta;
-    links?: CompraLinks;
+    meta?: GastoMeta;
+    links?: GastoLinks;
   };
   loading: boolean;
   status: string;
@@ -25,13 +25,13 @@ interface CompraState {
   totalMes: string;
   totalAnual: string;
   totalMesYearAnterior: string;
-  dataGraficaMes: CompraDataGraficaMes[];
-  categoriasMes: CompraInfoTableData[];
-  tiposMes: CompraInfoTableData[];
-  analisisMensual: CompraAnalisisMensual[] | null; // Ajusta el tipo según tu necesidad
+  dataGraficaMes: GastoDataGraficaMes[];
+  categoriasMes: GastoInfoTableData[];
+  tiposMes: GastoInfoTableData[];
+  analisisMensual: GastoAnalisisMensual[] | null; // Ajusta el tipo según tu necesidad
 }
 
-const initialState: CompraState = {
+const initialState: GastoState = {
   moduleName: "",
   moduleTitle: "",
   tableHeaders: {},
@@ -50,11 +50,11 @@ const initialState: CompraState = {
   analisisMensual: [],
 };
 
-export const compraSlice = createSlice({
-  name: "Compra",
+export const gastoSlice = createSlice({
+  name: "Gasto",
   initialState,
   reducers: {
-    onCompraLoading: (state) => {
+    onGastoLoading: (state) => {
       state.loading = true;
       state.status = "loading";
       state.errorMessage = undefined;
@@ -62,7 +62,7 @@ export const compraSlice = createSlice({
       state.pagination = {};
     },
 
-    onCompraFill: (state, action: PayloadAction<CompraData>) => {
+    onGastoFill: (state, action: PayloadAction<GastoData>) => {
       const { payload } = action;
 
       state.loading = false;
@@ -85,7 +85,7 @@ export const compraSlice = createSlice({
       state.categoriasMes = payload.categoriasMes || [];
       state.analisisMensual = payload.analisisMensual || null; // Asegúrate de que este campo exista en tu payload
     },
-    onCompraError: (state, action: PayloadAction<string>) => {
+    onGastoError: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.status = "not-loaded";
       state.errorMessage = action.payload;
@@ -107,5 +107,5 @@ export const compraSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { onCompraLoading, onCompraFill, onCompraError } =
-  compraSlice.actions;
+export const { onGastoLoading, onGastoFill, onGastoError } =
+  gastoSlice.actions;

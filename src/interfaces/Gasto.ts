@@ -1,21 +1,21 @@
-export interface CompraData {
-  data: CompraTableData[];
-  links: CompraLinks;
-  meta: CompraMeta;
+export interface GastoData {
+  data: GastoTableData[];
+  links: GastoLinks;
+  meta: GastoMeta;
   tableHeaders: { [key: string]: string };
   contador: number;
   moduleName: string;
   moduleTitle: string;
   totalMes: string;
   totalAnual: string;
-  dataGraficaMes: CompraDataGraficaMes[];
+  dataGraficaMes: GastoDataGraficaMes[];
   totalMesYearAnterior: string;
-  tiposMes: CompraInfoTableData[];
-  categoriasMes: CompraInfoTableData[];
-  analisisMensual: CompraAnalisisMensual[];
+  tiposMes: GastoInfoTableData[];
+  categoriasMes: GastoInfoTableData[];
+  analisisMensual: GastoAnalisisMensual[];
 }
 
-export interface CompraAnalisisMensual {
+export interface GastoAnalisisMensual {
   categoria:             string;
   tipo:                  string;
   titulo:                string;
@@ -32,42 +32,42 @@ export interface CompraAnalisisMensual {
   categoria_principal?:  string;
 }
 
-export interface CompraInfoTableData {
+export interface GastoInfoTableData {
   descripcion: string;
   total: number;
   porcentaje: string;
 }
 
-export interface CompraTableData {
+export interface GastoTableData {
   id: number;
   fecha: Date;
   descripcion: string;
-  categoria: CompraCategoria;
+  categoria: GastoCategoria;
   total: number;
-  estado: CompraEstado;
-  usuario: CompraUsuario;
+  estado: GastoEstado;
+  usuario: GastoUsuario;
   created_at: Date;
   updated_at: Date;
 }
 
-export interface CompraCategoria {
+export interface GastoCategoria {
   id: number;
   descripcion: string;
-  id_tipo?: CompraCategoria[];
-  id_estado: CompraEstado[];
-  id_usuario: CompraUsuario[];
+  id_tipo?: GastoCategoria[];
+  id_estado: GastoEstado[];
+  id_usuario: GastoUsuario[];
   created_at: Date;
   updated_at: Date;
 }
 
 
 
-export interface CompraEstado {
+export interface GastoEstado {
   id: number;
   descripcion: string;
 }
 
-export interface CompraUsuario {
+export interface GastoUsuario {
   id: number;
   name: string;
   email: string;
@@ -75,31 +75,31 @@ export interface CompraUsuario {
   updated_at: null;
 }
 
-export interface CompraDataGraficaMes {
+export interface GastoDataGraficaMes {
   descripcion: string;
   total: number;
   mes_numero: number;
 }
 
-export interface CompraLinks {
+export interface GastoLinks {
   first: string;
   last: string;
   prev: null;
   next: string;
 }
 
-export interface CompraMeta {
+export interface GastoMeta {
   current_page: number;
   from: number;
   last_page: number;
-  links: CompraLink[];
+  links: GastoLink[];
   path: string;
   per_page: number;
   to: number;
   total: number;
 }
 
-export interface CompraLink {
+export interface GastoLink {
   url: null | string;
   label: string;
   active: boolean;

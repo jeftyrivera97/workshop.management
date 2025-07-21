@@ -1,7 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../redux/redux";
 import adminApi from "../../api/adminApi";
-import { onCompraError, onCompraFill, onCompraLoading } from "../../store";
+import {
+  onCompraError,
+  onCompraFill,
+  onCompraLoading,
+} from "../../store/Compra/compraSlice";
 import { ApiError } from "../../interfaces";
+import { CompraData } from "../../interfaces/Compra";
 
 export const useCompraStore = () => {
   const {
@@ -17,36 +22,41 @@ export const useCompraStore = () => {
     totalMes,
     totalAnual,
     dataGraficaMes,
-    totalMesAnterior,
+    totalMesYearAnterior,
     tiposMes,
     categoriasMes,
+    analisisMensual,
   } = useAppSelector((state) => state.compra);
+
   const dispatch = useAppDispatch();
 
   // Carga inicial completa (dashboard + tabla)
   const startLoading = async (
     page: number = 1,
     module: string = "",
-    extraParam?: string | number // ✅ Parámetro adicional
+    dateParam?: string
   ): Promise<void> => {
     dispatch(onCompraLoading());
     try {
       const token = localStorage.getItem("token");
       let url = `/${module}?page=${page}`;
       if (
-        extraParam !== undefined &&
-        extraParam !== null &&
-        extraParam !== ""
+        dateParam !== undefined &&
+        dateParam !== null &&
+        dateParam !== ""
       ) {
-        url += `&dateParam=${extraParam}`;
+        url += `&dateParam=${dateParam}`;
       }
       const resp = await adminApi.get(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("startLoading response:", resp);
-      dispatch(onCompraFill(resp.data));
+
+      console.log("API Response:", resp.data);
+
+      // ✅ El payload ya está tipado como CompraData
+      dispatch(onCompraFill(resp.data as CompraData));
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
@@ -54,49 +64,45 @@ export const useCompraStore = () => {
         apiError.message ||
         "Error desconocido al cargar los datos";
 
-      dispatch(onCompraError(`Error al cargar los datos: ${errorMessage}`));
-      throw new Error(`Error al cargar los datos: ${errorMessage}`);
+      console.error("❌ Error en startLoading:", errorMessage);
+      dispatch(onCompraError(errorMessage));
     }
   };
 
   //Solo paginación de tabla (sin recargar dashboard)
   const nextPageLoading = async (
     page: number = 1,
-    module: string = ""
+    module: string = "",
+    dateParam?: string
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      const resp = await adminApi.get(`/${module}?page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // ✅ Construir URL con filtro
+      let url = `/${module}?page=${page}`;
+      if (
+        dateParam !== undefined &&
+        dateParam !== null &&
+        dateParam !== ""
+      ) {
+        url += `&dateParam=${dateParam}`;
+      }
+      const resp = await adminApi.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      // Solo actualizar datos de tabla sin resetear el dashboard
-      dispatch(
-        onCompraFill({
-          ...resp.data,
-          // Mantener datos del dashboard existentes
-          totalMes,
-          totalAnual,
-          dataGraficaMes,
-          totalMesAnterior,
-          tiposMes,
-          categoriasMes,
-          counter,
-          moduleName,
-          moduleTitle,
-        })
-      );
+      console.log("🔍 nextPageLoading response:", resp.data);
+      dispatch(onCompraFill(resp.data as CompraData));
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
         apiError.response?.data?.message ||
         apiError.message ||
-        "Error desconocido al cargar los datos";
+        "Error al cambiar página";
 
-      dispatch(onCompraError(`Error al cargar los datos: ${errorMessage}`));
-      throw new Error(`Error al cargar los datos: ${errorMessage}`);
+      console.error("❌ Error en nextPageLoading:", errorMessage);
+      dispatch(onCompraError(errorMessage));
     }
   };
 
@@ -106,7 +112,7 @@ export const useCompraStore = () => {
     status,
     tableData: tableData || [],
     loading,
-    pagination,
+    pagination, 
     tableHeaders,
     counter,
     moduleName,
@@ -114,9 +120,10 @@ export const useCompraStore = () => {
     totalMes,
     totalAnual,
     dataGraficaMes: dataGraficaMes || [],
-    totalMesAnterior,
+    totalMesYearAnterior,
     tiposMes: tiposMes || [],
     categoriasMes: categoriasMes || [],
+    analisisMensual: analisisMensual || [],
 
     //* Métodos
     startLoading,

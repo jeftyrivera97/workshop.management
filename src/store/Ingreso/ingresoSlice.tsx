@@ -6,6 +6,7 @@ import {
   IngresoLinks,
   IngresoDataGraficaMes,
   IngresoInfoTableData,
+  IngresoAnalisisMensual,
 } from "../../interfaces/Ingreso";
 
 interface IngresoState {
@@ -23,10 +24,11 @@ interface IngresoState {
   counter: number;
   totalMes: string;
   totalAnual: string;
-  totalMesAnterior: string;
+  totalMesYearAnterior: string;
   dataGraficaMes: IngresoDataGraficaMes[];
   categoriasMes: IngresoInfoTableData[];
   tiposMes: IngresoInfoTableData[];
+  analisisMensual: IngresoAnalisisMensual[] | null; // Ajusta el tipo según tu necesidad
 }
 
 const initialState: IngresoState = {
@@ -41,10 +43,11 @@ const initialState: IngresoState = {
   counter: 0,
   totalMes: "L.0",
   totalAnual: "L.0",
-  totalMesAnterior: "L.0",
+  totalMesYearAnterior: "L.0",
   dataGraficaMes: [],
   categoriasMes: [],
   tiposMes: [],
+  analisisMensual: []
 };
 
 export const ingresoSlice = createSlice({
@@ -58,7 +61,7 @@ export const ingresoSlice = createSlice({
       state.tableData = [];
       state.pagination = {};
     },
-  
+
     onIngresoFill: (state, action: PayloadAction<IngresoData>) => {
       const { payload } = action;
 
@@ -77,9 +80,10 @@ export const ingresoSlice = createSlice({
       state.totalMes = payload.totalMes || "L. 0";
       state.totalAnual = payload.totalAnual || "L. 0";
       state.dataGraficaMes = payload.dataGraficaMes || [];
-      state.totalMesAnterior = payload.totalMesAnterior || "L. 0";
+      state.totalMesYearAnterior = payload.totalMesYearAnterior || "L. 0";
       state.tiposMes = payload.tiposMes || [];
       state.categoriasMes = payload.categoriasMes || [];
+      state.analisisMensual = payload.analisisMensual || null; // Asegúrate de que este campo exista en tu payload
     },
     onIngresoError: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -94,9 +98,10 @@ export const ingresoSlice = createSlice({
       state.totalMes = "L.0";
       state.totalAnual = "L.0";
       state.dataGraficaMes = [];
-      state.totalMesAnterior = "L.0";
+      state.totalMesYearAnterior = "L.0";
       state.tiposMes = [];
       state.categoriasMes = [];
+      state.analisisMensual = null;
     },
   },
 });

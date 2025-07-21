@@ -1,14 +1,14 @@
 import { useAppDispatch, useAppSelector } from "../redux/redux";
 import adminApi from "../../api/adminApi";
 import {
-  onIngresoError,
-  onIngresoFill,
-  onIngresoLoading,
-} from "../../store/Ingreso/ingresoSlice";
+  onGastoError,
+  onGastoFill,
+  onGastoLoading,
+} from "../../store/Gasto/gastoSlice";
 import { ApiError } from "../../interfaces";
-import { IngresoData } from "../../interfaces/Ingreso";
+import { GastoData } from "../../interfaces/Gasto";
 
-export const useIngresoStore = () => {
+export const useGastoStore = () => {
   const {
     status,
     loading,
@@ -26,7 +26,7 @@ export const useIngresoStore = () => {
     tiposMes,
     categoriasMes,
     analisisMensual,
-  } = useAppSelector((state) => state.ingreso);
+  } = useAppSelector((state) => state.gasto);
 
   const dispatch = useAppDispatch();
 
@@ -36,7 +36,7 @@ export const useIngresoStore = () => {
     module: string = "",
     dateParam?: string
   ): Promise<void> => {
-    dispatch(onIngresoLoading());
+    dispatch(onGastoLoading());
     try {
       const token = localStorage.getItem("token");
       let url = `/${module}?page=${page}`;
@@ -55,8 +55,8 @@ export const useIngresoStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como IngresoData
-      dispatch(onIngresoFill(resp.data as IngresoData));
+      // ✅ El payload ya está tipado como GastoData
+      dispatch(onGastoFill(resp.data as GastoData));
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
@@ -65,7 +65,7 @@ export const useIngresoStore = () => {
         "Error desconocido al cargar los datos";
 
       console.error("❌ Error en startLoading:", errorMessage);
-      dispatch(onIngresoError(errorMessage));
+      dispatch(onGastoError(errorMessage));
     }
   };
 
@@ -93,7 +93,7 @@ export const useIngresoStore = () => {
     });
 
       console.log("🔍 nextPageLoading response:", resp.data);
-      dispatch(onIngresoFill(resp.data as IngresoData));
+      dispatch(onGastoFill(resp.data as GastoData));
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
@@ -102,7 +102,7 @@ export const useIngresoStore = () => {
         "Error al cambiar página";
 
       console.error("❌ Error en nextPageLoading:", errorMessage);
-      dispatch(onIngresoError(errorMessage));
+      dispatch(onGastoError(errorMessage));
     }
   };
 

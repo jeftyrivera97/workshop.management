@@ -1,5 +1,5 @@
-import { useCompraStore } from "../../../../hooks";
-import { CompraTableData } from "../../../../interfaces/Compra";
+import { useGastoStore } from "../../../../hooks";
+import { GastoTableData } from "../../../../interfaces/Gasto";
 import { getDateData } from "../../../../helpers";
 
 interface IndexTableProps {
@@ -8,11 +8,11 @@ interface IndexTableProps {
 
 export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
   const { nextPageLoading, tableData, pagination, loading, tableHeaders } =
-    useCompraStore();
+    useGastoStore();
 
   // ✅ Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
-    nextPageLoading(page, "compra", selectedMonth); // Agregar filtro
+    nextPageLoading(page, "gasto", selectedMonth); // Agregar filtro
   };
 
   const { formatDate } = getDateData();
@@ -39,7 +39,7 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
         {/* Body  */}
         <tbody>
           {tableData && tableData.length > 0 ? (
-            tableData.map((element: CompraTableData) => (
+            tableData.map((element: GastoTableData) => (
               <tr
                 key={element.id}
                 className="hover:bg-base-200/30 transition-colors duration-200"

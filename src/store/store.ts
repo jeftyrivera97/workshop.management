@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { authSlice,ingresoSlice, compraSlice } from './';
+import { gastoSlice } from './Gasto/gastoSlice';
 
 // ...
 
@@ -8,6 +9,7 @@ export const store = configureStore({
      auth: authSlice.reducer,
     ingreso: ingresoSlice.reducer,
     compra: compraSlice.reducer,
+    gasto: gastoSlice.reducer, // Asegúrate de importar y agregar el slice de gasto
   },
 })
 

@@ -1,18 +1,35 @@
-
 export interface IngresoData {
-  data:             IngresoTableData[];
-  links:            IngresoLinks;
-  meta:             IngresoMeta;
-  tableHeaders:     { [key: string]: string };
-  contador:         number;
-  moduleName:       string;
-  moduleTitle:      string;
-  totalMes:         string;
-  totalAnual:       string;
-  dataGraficaMes:   IngresoDataGraficaMes[];
-  totalMesAnterior: string;
-  tiposMes:         IngresoInfoTableData[];
-  categoriasMes:    IngresoInfoTableData[];
+  data:                 IngresoTableData[];
+  links:                IngresoLinks;
+  meta:                 IngresoMeta;
+  tableHeaders:         { [key: string]: string };
+  contador:             number;
+  moduleName:           string;
+  moduleTitle:          string;
+  totalMes:             string;
+  totalAnual:           string;
+  dataGraficaMes:       IngresoDataGraficaMes[];
+  totalMesYearAnterior: string;
+  tiposMes:             IngresoInfoTableData[];
+  categoriasMes:        IngresoInfoTableData[];
+  analisisMensual:      IngresoAnalisisMensual[];
+}
+
+export interface IngresoAnalisisMensual {
+  categoria:             string;
+  tipo:                  string;
+  titulo:                string;
+  porcentaje?:           number;
+  rango_recomendado?:    string;
+  limite_maximo?:        number;
+  mensaje:               string;
+  recomendacion:         string;
+  ratio?:                string;
+  operacionales?:        number;
+  pasivos?:              number;
+  cantidad_categorias?:  number;
+  porcentaje_principal?: number;
+  categoria_principal?:  string;
 }
 
 export interface IngresoInfoTableData {
@@ -25,7 +42,7 @@ export interface IngresoTableData {
   id:          number;
   fecha:       Date;
   descripcion: string;
-  categoria:   IngresoCategoria;
+  categoria:  IngresoCategoria;
   total:       number;
   estado:      IngresoEstado;
   usuario:     IngresoUsuario;
@@ -39,14 +56,16 @@ export interface IngresoCategoria {
   id_tipo?:    IngresoCategoria[];
   id_estado:   IngresoEstado[];
   id_usuario:  IngresoUsuario[];
-  created_at:  string;
-  updated_at:  string;
+  created_at:  Date;
+  updated_at:  Date;
 }
+
 
 export interface IngresoEstado {
   id:          number;
   descripcion: string;
 }
+
 
 export interface IngresoUsuario {
   id:         number;
@@ -59,6 +78,7 @@ export interface IngresoUsuario {
 export interface IngresoDataGraficaMes {
   descripcion: string;
   total:       number;
+  mes_numero:  number;
 }
 
 export interface IngresoLinks {

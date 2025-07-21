@@ -1,12 +1,12 @@
 import { useIngresoStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
+import { AnalisisFinanciero } from "./components/AnalisisFinanciero"; // ✅ Importar nuevo componente
 import { InfoInput } from "../../layouts";
 import LineChartComponent from "../shared/LineChartComponent";
 import { DataTable } from "../../layouts";
 import { useEffect, useRef, useState } from "react";
 import { MonthDateInput } from "./../shared/MonthDateInput";
-
 import { getDateData } from "../../../helpers/getDateData";
 
 export const IngresoIndex = () => {
@@ -17,11 +17,11 @@ export const IngresoIndex = () => {
     totalMes,
     totalAnual,
     dataGraficaMes,
-    totalMesAnterior,
+    totalMesYearAnterior,
     categoriasMes,
     tiposMes,
+    analisisMensual,
   } = useIngresoStore();
-
 
   const { getCurrentYearMonth, getMonthName, getMonthInfo } = getDateData();
   const [currentSelectedMonth, setCurrentSelectedMonth] = useState<string>(
@@ -39,96 +39,74 @@ export const IngresoIndex = () => {
     }
   }, []);
 
- 
   const handleMonthSelection = (selectedMonth: string) => {
     console.log("📅 Mes recibido en IngresoIndex:", selectedMonth);
-    setCurrentSelectedMonth(selectedMonth); // ✅ Actualizar estado local
-    startLoading(1, "ingreso", selectedMonth); // ✅ Cargar datos
+    setCurrentSelectedMonth(selectedMonth);
+    startLoading(1, "ingreso", selectedMonth);
   };
 
   return (
-    <div>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-4 ">
-        <ModuleTab moduleName={moduleTitle} />
+    <div className="space-y-6"> {/* ✅ Usar space-y para consistencia */}
+      {/* Header del módulo */}
+      <ModuleTab moduleName={moduleTitle} />
+
+      {/* Selector de mes */}
+      <MonthDateInput
+        selectedMonth={currentSelectedMonth}
+        onMonthChange={handleMonthSelection}
+      />
+
+      {/* Indicador de período */}
+      <div className="ml-2">
+        <p className="text-sm text-base-content/60 flex items-center gap-2">
+          <span className="text-primary">📅</span>
+          Período:{" "}
+          <span className="font-medium text-base-content">{selectedMonthName}</span>
+        </p>
       </div>
 
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-4 ">
-        {/* ✅ Pasar estado y callback al hijo */}
-        <MonthDateInput
-          selectedMonth={currentSelectedMonth}
-          onMonthChange={handleMonthSelection}
+      {/* KPIs - Grid de 4 columnas */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ml-2">
+        <InfoInput
+          valor={counter}
+          descripcion={`Registros de ${selectedMonthName}`}
+        />
+        <InfoInput
+          valor={totalMes}
+          descripcion={`Total de ${monthInfo.currentName}`}
+        />
+        <InfoInput
+          valor={totalMesYearAnterior}
+          descripcion={`Total de ${monthInfo.previousYearName}`}
+        />
+        <InfoInput
+          valor={totalAnual}
+          descripcion={`Total del Año ${monthInfo.year}`}
         />
       </div>
 
-      {/* ✅ Mostrar información del mes seleccionado */}
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-4 ">
-        <div className="mb-4 ml-2">
-          <p className="text-sm text-base-content/60 flex items-center gap-2">
-            <span className="text-primary">📅</span>
-            Período:{" "}
-            <span className="font-medium text-base-content">
-              {selectedMonthName}
-            </span>
-          </p>
-        </div>
-      </div>
+      {/* Análisis financiero */}
+      <AnalisisFinanciero
+        analisisMensual={analisisMensual}
+        selectedMonthName={selectedMonthName}
+      />
 
-      <div className="grid auto-rows-min gap-4 md:grid-cols-4 ml-2">
-        <div>
-          <InfoInput
-            valor={counter}
-            descripcion={`Registros de ${selectedMonthName}`}
-          />
-        </div>
-        <div>
-          <InfoInput
-            valor={totalMes}
-            descripcion={`Total de ${monthInfo.currentName}`}
-          />
-        </div>
-        <div>
-          <InfoInput
-            valor={totalMesAnterior}
-            descripcion={`Total ${monthInfo.previousName}`}
-          />
-        </div>
-        <div>
-          <InfoInput
-            valor={totalAnual}
-            descripcion={`Total del Año ${monthInfo.year}`}
-          />
-        </div>
-      </div>
+      {/* Gráfico de líneas */}
+      <LineChartComponent data={dataGraficaMes} />
 
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-2">
-        <div>
-          <LineChartComponent data={dataGraficaMes} />
-        </div>
-      </div>
+      {/* Tablas de datos */}
+      <div className="space-y-6"> {/* ✅ Agrupar tablas */}
+        <DataTable
+          data={tiposMes}
+          titulo={`Ingresos por Tipo - ${selectedMonthName}`}
+        />
 
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-2">
-        <div>
-          <DataTable
-            data={tiposMes}
-            titulo={`Ingresos por Tipo - ${selectedMonthName}`}
-          />
-        </div>
-      </div>
+        <DataTable
+          data={categoriasMes}
+          titulo={`Ingresos por Categoría - ${selectedMonthName}`}
+        />
 
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-2">
-        <div>
-          <DataTable
-            data={categoriasMes}
-            titulo={`Ingresos por Categoría - ${selectedMonthName}`}
-          />
-        </div>
-      </div>
-
-      <div className="grid auto-rows-min gap-4 md:grid-cols-1 mt-2">
-        <div>
-          {/* ✅ Pasar el mes seleccionado a IndexTable */}
-          <IndexTable selectedMonth={currentSelectedMonth} />
-        </div>
+        <IndexTable selectedMonth={currentSelectedMonth} />
       </div>
     </div>
   );

@@ -6,18 +6,18 @@ interface InfoInputProps {
 
 export const InfoInput = ({ valor, descripcion, icon }: InfoInputProps) => {
   return (
-    <div className="mt-2 bg-base-100 p-4 rounded-xl border border-base-content/10 hover:border-base-content/20 transition-all duration-200 hover:shadow-lg group">
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-base-content/60 text-sm font-medium mb-2">
+    <div className="bg-gradient-to-br from-base-100 to-base-200 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all hover:scale-[1.02] group">
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-xs font-medium text-base-content/50 uppercase tracking-wide mb-1">
             {descripcion}
-          </p>
-          <p className="text-base-content text-xl font-bold group-hover:text-primary transition-colors">
+          </div>
+          <div className="text-2xl font-black text-base-content group-hover:text-primary transition-colors">
             {valor}
-          </p>
+          </div>
         </div>
         {icon && (
-          <div className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">
+          <div className="text-3xl opacity-60 group-hover:opacity-100 transition-all group-hover:scale-110">
             {icon}
           </div>
         )}

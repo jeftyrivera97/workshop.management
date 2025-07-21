@@ -55,6 +55,7 @@ export const getDateData = () => {
     return `${year}-${month}`;
   };
 
+  // Función que incluye año anterior
   const getMonthInfo = (yearMonth: string) => {
     if (!yearMonth) {
       const now = new Date();
@@ -64,15 +65,25 @@ export const getDateData = () => {
       return {
         currentName: getMonthName(currentYM),
         previousName: "",
+        previousYearName: "", // ✅ Nuevo campo
         year: now.getFullYear(),
       };
     }
 
     const [year, month] = yearMonth.split("-");
     const currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+    
+    // Mes anterior
     const previousDate = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() - 1,
+      1
+    );
+    
+    // Año anterior con el mismo mes
+    const previousYearDate = new Date(
+      parseInt(year) - 1, // Año anterior
+      parseInt(month) - 1, // Mismo mes
       1
     );
 
@@ -80,10 +91,17 @@ export const getDateData = () => {
       previousDate.getMonth() + 1
     ).padStart(2, "0")}`;
 
+    //  Formato para año anterior
+    const previousYearYM = `${previousYearDate.getFullYear()}-${String(
+      previousYearDate.getMonth() + 1
+    ).padStart(2, "0")}`;
+
     return {
       currentName: getMonthName(yearMonth),
-      previousName: getMonthName(previousYM),
+      previousName: getMonthName(previousYM), // Mes anterior
+      previousYearName: getMonthName(previousYearYM), // ✅ Mismo mes del año anterior
       year: parseInt(year),
+      previousYear: parseInt(year) - 1, // ✅ Año anterior
     };
   };
 
