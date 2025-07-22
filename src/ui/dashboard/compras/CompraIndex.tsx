@@ -1,7 +1,7 @@
 import { useCompraStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
-import { AnalisisFinanciero } from "./components/AnalisisFinanciero"; // 
+import { AnalisisFinanciero } from "./../shared/analisis/AnalisisFinanciero";
 import { InfoInput } from "../../layouts";
 import LineChartComponent from "../shared/LineChartComponent";
 import { DataTable } from "../../layouts";
@@ -88,6 +88,7 @@ export const CompraIndex = () => {
       <AnalisisFinanciero
         analisisMensual={analisisMensual}
         selectedMonthName={selectedMonthName}
+        descripcion="Compras"
       />
       {/* Gráfico de líneas */}
       <LineChartComponent data={dataGraficaMes} />

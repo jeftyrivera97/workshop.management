@@ -19,7 +19,7 @@ export interface IngresoAnalisisMensual {
   categoria:             string;
   tipo:                  string;
   titulo:                string;
-  porcentaje?:           number;
+  porcentaje:           number;
   rango_recomendado?:    string;
   limite_maximo?:        number;
   mensaje:               string;

@@ -1,7 +1,7 @@
 import { useIngresoStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
-import { AnalisisFinanciero } from "./components/AnalisisFinanciero"; // ✅ Importar nuevo componente
+import { AnalisisFinanciero } from "./../shared/analisis/AnalisisFinanciero"; 
 import { InfoInput } from "../../layouts";
 import LineChartComponent from "../shared/LineChartComponent";
 import { DataTable } from "../../layouts";
@@ -89,6 +89,7 @@ export const IngresoIndex = () => {
       <AnalisisFinanciero
         analisisMensual={analisisMensual}
         selectedMonthName={selectedMonthName}
+        descripcion="Ingresos"
       />
 
       {/* Gráfico de líneas */}
