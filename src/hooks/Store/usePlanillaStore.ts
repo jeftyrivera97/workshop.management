@@ -26,6 +26,9 @@ export const usePlanillaStore = () => {
     tiposMes,
     categoriasMes,
     analisisMensual,
+     empleadosMes,
+      puestosMes,
+      areasMes,
   } = useAppSelector((state) => state.planilla);
 
   const dispatch = useAppDispatch();
@@ -124,6 +127,9 @@ export const usePlanillaStore = () => {
     tiposMes: tiposMes || [],
     categoriasMes: categoriasMes || [],
     analisisMensual: analisisMensual || [],
+    empleadosMes: empleadosMes || [],
+    puestosMes: puestosMes || [],
+    areasMes: areasMes || [],
 
     //* Métodos
     startLoading,

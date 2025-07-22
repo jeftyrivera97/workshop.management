@@ -13,6 +13,8 @@ import { IngresoIndex } from '../ui/dashboard/ingresos/IngresoIndex';
 import { CompraIndex } from '../ui/dashboard/compras/CompraIndex';
 import { GastoIndex } from '../ui/dashboard/gastos/GastoIndex';
 import { PlanillaIndex } from '../ui/dashboard/planillas/PlanillaIndex';
+import { HomeIndex } from '../ui/dashboard';
+
 
 
 
@@ -44,12 +46,13 @@ export const AppRouter = () => {
                     : (
                         <>
                             <Route element={<Layout />}>
-                                <Route path="/" element={<Navigate to="/ingresos" />} />
+                                <Route path="/" element={<Navigate to="/home" />} />
                                 <Route path="/ingresos" element={<IngresoIndex />} />
                                 <Route path="/compras" element={<CompraIndex />} />
                                 <Route path="/gastos" element={<GastoIndex />} />
                                 <Route path="/planillas" element={<PlanillaIndex />} />
-                                <Route path="/*" element={<Navigate to="/ingresos" />} />
+                                <Route path="/home" element={<HomeIndex />} />
+                                <Route path="/*" element={<Navigate to="/home" />} />
                             </Route>
                         </>
                     )

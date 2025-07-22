@@ -4,6 +4,7 @@ export const NavbarItem = () => {
   const location = useLocation();
 
   const menuItems = [
+    { path: "/home", label: "Inicio" },
     { path: "/ingresos", label: "Ingresos" },
     { path: "/compras", label: "Compras" },
     { path: "/gastos", label: "Gastos" },

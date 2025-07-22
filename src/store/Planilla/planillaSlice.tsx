@@ -28,7 +28,10 @@ interface PlanillaState {
   dataGraficaMes: PlanillaDataGraficaMes[];
   categoriasMes: PlanillaInfoTableData[];
   tiposMes: PlanillaInfoTableData[];
-  analisisMensual: PlanillaAnalisisMensual[] | null; // Ajusta el tipo según tu necesidad
+  analisisMensual: PlanillaAnalisisMensual[] | null;
+  empleadosMes: PlanillaInfoTableData[];
+  puestosMes: PlanillaInfoTableData[];
+  areasMes: PlanillaInfoTableData[];
 }
 
 const initialState: PlanillaState = {
@@ -48,6 +51,9 @@ const initialState: PlanillaState = {
   categoriasMes: [],
   tiposMes: [],
   analisisMensual: [],
+  empleadosMes: [],
+  puestosMes: [],
+  areasMes: [],
 };
 
 export const planillaSlice = createSlice({
@@ -83,7 +89,10 @@ export const planillaSlice = createSlice({
       state.totalMesYearAnterior = payload.totalMesYearAnterior || "L. 0";
       state.tiposMes = payload.tiposMes || [];
       state.categoriasMes = payload.categoriasMes || [];
-      state.analisisMensual = payload.analisisMensual || null; // Asegúrate de que este campo exista en tu payload
+      state.analisisMensual = payload.analisisMensual || null; 
+      state.empleadosMes = payload.empleadosMes || [];
+      state.puestosMes = payload.puestosMes || [];
+      state.areasMes = payload.areasMes || [];
     },
     onPlanillaError: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -102,6 +111,8 @@ export const planillaSlice = createSlice({
       state.tiposMes = [];
       state.categoriasMes = [];
       state.analisisMensual = null;
+      state.empleadosMes = [];
+      state.puestosMes = [];
     },
   },
 });
