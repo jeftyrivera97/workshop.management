@@ -25,6 +25,7 @@ export const useHomeStore = () => {
     categoriasComprasAnual,
     categoriasGastosAnual,
     moduleTitle,
+    tiposIngresosAnual,
   } = useAppSelector((state) => state.home);
 
   const dispatch = useAppDispatch();
@@ -76,6 +77,7 @@ export const useHomeStore = () => {
     categoriasComprasAnual,
     categoriasGastosAnual,
     moduleTitle,
+    tiposIngresosAnual,
 
     //* Métodos
     startLoading,

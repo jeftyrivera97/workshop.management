@@ -9,9 +9,10 @@ export interface HomeData {
     rentabilidad:            HomeRentabilidad;
     dataGraficaIngresos:     HomeDataGrafica[];
     dataGraficaEgresos:      HomeDataGrafica[];
-    categoriasIngresosAnual: HomeCategoriasSAnual[];
-    categoriasComprasAnual:  HomeCategoriasSAnual[];
-    categoriasGastosAnual:   HomeCategoriasSAnual[];
+    categoriasIngresosAnual: HomeCategoriasAnual[];
+    categoriasComprasAnual:  HomeCategoriasAnual[];
+    categoriasGastosAnual:   HomeCategoriasAnual[];
+    tiposIngresosAnual:      HomeCategoriasAnual[];
 }
 
 export interface HomeBalances {
@@ -21,7 +22,7 @@ export interface HomeBalances {
     icono_balance:  string;
 }
 
-export interface HomeCategoriasSAnual {
+export interface HomeCategoriasAnual {
     descripcion: string;
     total:       number;
     porcentaje:  string;

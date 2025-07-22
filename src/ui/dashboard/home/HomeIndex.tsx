@@ -11,8 +11,6 @@ import { TrendCard } from "./components/TrendCard";
 import { MargenCard } from "./components/MargenCard";
 import { InfoBalance } from "./components/InfoBalance";
 
-
-
 export const HomeIndex = () => {
   const {
     startLoading,
@@ -28,6 +26,7 @@ export const HomeIndex = () => {
     categoriasComprasAnual,
     categoriasGastosAnual,
     moduleTitle,
+    tiposIngresosAnual,
   } = useHomeStore();
 
   const currentYear = new Date().getFullYear();
@@ -76,7 +75,7 @@ export const HomeIndex = () => {
         />
         <InfoBalance
           valor={balances.balance_anual}
-            descripcion={`Balance del Año ${currentYear}`}
+          descripcion={`Balance del Año ${currentYear}`}
         />
       </div>
 
@@ -129,9 +128,14 @@ export const HomeIndex = () => {
         <BarGraphComparisonComponent data={chartData} />
 
         <DataTable
+          data={tiposIngresosAnual}
+          titulo={`Tipos de Ingresos - ${currentYear}`}
+        />
+        <DataTable
           data={categoriasIngresosAnual}
           titulo={`Categorías de Ingresos - ${currentYear}`}
         />
+
         <DataTable
           data={categoriasComprasAnual}
           titulo={`Categorías de Compras - ${currentYear}`}

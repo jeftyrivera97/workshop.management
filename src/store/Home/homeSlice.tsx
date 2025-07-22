@@ -63,6 +63,7 @@ const initialState: HomeState = {
   categoriasIngresosAnual: [],
   categoriasComprasAnual: [],
   categoriasGastosAnual: [],
+  tiposIngresosAnual: [],
 };
 
 export const homeSlice = createSlice({
@@ -91,6 +92,7 @@ export const homeSlice = createSlice({
       state.categoriasIngresosAnual = action.payload.categoriasIngresosAnual || [];
       state.categoriasComprasAnual = action.payload.categoriasComprasAnual || [];
       state.categoriasGastosAnual = action.payload.categoriasGastosAnual || [];
+      state.tiposIngresosAnual = action.payload.tiposIngresosAnual || [];
     },
     onHomeError: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -109,6 +111,7 @@ export const homeSlice = createSlice({
       state.moduleName = "";
       state.moduleTitle = "";
       state.totales = initialState.totales;
+      state.tiposIngresosAnual = [];
     },
   },
 });

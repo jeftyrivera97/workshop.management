@@ -46,7 +46,7 @@ export const IngresoIndex = () => {
   };
 
   return (
-    <div className="space-y-6"> {/* ✅ Usar space-y para consistencia */}
+    <div className="space-y-6 mt-2"> {/* ✅ Usar space-y para consistencia */}
       {/* Header del módulo */}
       <ModuleTab moduleName={moduleTitle} />
 
