@@ -1,5 +1,6 @@
 import {
   onChecking,
+  onErrorLogin,
   onLogin,
   onLoginWindow,
   onLogout,
@@ -27,9 +28,9 @@ export const useAuthStore = () => {
       console.log("Iniciado sesion correctamente");
     } catch (error) {
         const apiError = error as ApiError;
-        console.error("Error al renovar el token:", apiError.message || apiError);
+        dispatch(onErrorLogin(apiError.message));
         localStorage.clear();
-        dispatch(onLogout());
+        
     }
   }; //
 

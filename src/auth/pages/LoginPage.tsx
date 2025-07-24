@@ -24,17 +24,9 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (
-      errorMessage !== undefined &&
-      errorMessage !== null &&
-      errorMessage !== ""
+      errorMessage !== null 
     ) {
-      try {
-        Swal.fire("Error en la autenticación", errorMessage, "error");
-      } catch (error) {
-        console.error("Error con SweetAlert2:", error);
-        // Fallback: usar alert nativo
-        alert(`Error: ${errorMessage}`);
-      }
+      Swal.fire("Credenciales Incorrectas", errorMessage, "error");
     }
   }, [errorMessage]);
 

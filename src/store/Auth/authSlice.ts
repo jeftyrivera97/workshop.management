@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Definir interfaces para el estado de autenticación
 interface User {
@@ -8,32 +8,32 @@ interface User {
 }
 
 interface AuthState {
-  status: 'not-authenticated' | 'checking' | 'authenticated';
+  status: "not-authenticated" | "checking" | "authenticated";
   user: User | null;
   errorMessage: string | null;
 }
 const initialState: AuthState = {
-  status: 'not-authenticated',
+  status: "not-authenticated",
   user: null,
   errorMessage: null,
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     onChecking: (state) => {
-      state.status = 'checking';
+      state.status = "checking";
       state.user = null;
       state.errorMessage = null;
     },
     onLogin: (state, action: PayloadAction<User>) => {
-      state.status = 'authenticated';
+      state.status = "authenticated";
       state.user = action.payload;
       state.errorMessage = null;
     },
     onLogout: (state) => {
-      state.status = 'not-authenticated';
+      state.status = "not-authenticated";
       state.user = null;
       state.errorMessage = null;
     },
@@ -45,19 +45,20 @@ export const authSlice = createSlice({
       state.errorMessage = null;
     },
     onErrorLogin: (state, action: PayloadAction<string>) => {
-      state.status = 'not-authenticated';
+      state.status = "not-authenticated";
+      state.user = null;
       state.errorMessage = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const { 
-  onChecking, 
-  onLogin, 
-  onLogout, 
-  clearErrorMessage, 
-  onErrorLogin, 
-  onLoginWindow 
+export const {
+  onChecking,
+  onLogin,
+  onLogout,
+  clearErrorMessage,
+  onErrorLogin,
+  onLoginWindow,
 } = authSlice.actions;
 
 export default authSlice.reducer;

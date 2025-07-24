@@ -1,11 +1,14 @@
 import { SideBarItem } from "./SideBarItem";
-import logo from "../../../../public/logo-redondo.svg"; 
+import logo from "../../../../public/logo-redondo.svg";
+import { useAuthStore } from "../../../hooks";
 
 export const SideBar = () => {
   const closeDrawer = () => {
     const drawer = document.getElementById("my-drawer-3") as HTMLInputElement;
     if (drawer) drawer.checked = false;
   };
+
+  const { startLogout } = useAuthStore();
 
   return (
     <>
@@ -43,7 +46,10 @@ export const SideBar = () => {
 
           {/* Footer con logout */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-base-300 bg-base-100/30">
-            <button className="btn btn-error btn-sm w-full">
+            <button
+              className="btn btn-error btn-sm w-full"
+              onClick={startLogout}
+            >
               <svg
                 className="w-4 h-4 mr-2"
                 fill="none"

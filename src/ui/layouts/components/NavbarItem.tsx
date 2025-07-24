@@ -4,11 +4,12 @@ export const NavbarItem = () => {
   const location = useLocation();
 
   const menuItems = [
-    { path: "/home", label: "Inicio" },
+    { path: "/home", label: "Anual" },
     { path: "/ingresos", label: "Ingresos" },
     { path: "/compras", label: "Compras" },
     { path: "/gastos", label: "Gastos" },
     { path: "/planillas", label: "Planillas" },
+    { path: "/servicios", label: "Servicios" },
   ];
 
   return (

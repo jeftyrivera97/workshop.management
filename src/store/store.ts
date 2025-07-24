@@ -3,6 +3,7 @@ import { authSlice,ingresoSlice, compraSlice } from './';
 import { gastoSlice } from './Gasto/gastoSlice';
 import { planillaSlice } from './Planilla/planillaSlice';
 import { homeSlice } from './Home/homeSlice';
+import { servicioSlice } from './Servicio/servicioSlice';
 
 // ...
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     gasto: gastoSlice.reducer,
     planilla: planillaSlice.reducer,
     home: homeSlice.reducer,
+    servicio: servicioSlice.reducer,
   },
 })
 
