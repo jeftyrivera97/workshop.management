@@ -1,5 +1,5 @@
-import { useGastoStore } from "../../../../hooks";
-import { GastoTableData } from "../../../../interfaces/Gasto";
+import { useServicioStore } from "../../../../hooks";
+import { ServicioTableData } from "../../../../interfaces/Servicio";
 import { getDateData } from "../../../../helpers";
 
 interface IndexTableProps {
@@ -8,7 +8,7 @@ interface IndexTableProps {
 
 export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
   const { nextPageLoading, tableData, pagination, loading, tableHeaders } =
-    useGastoStore();
+    useServicioStore();
 
   //  Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
@@ -39,7 +39,7 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
         {/* Body  */}
         <tbody>
           {tableData && tableData.length > 0 ? (
-            tableData.map((element: GastoTableData) => (
+            tableData.map((element: ServicioTableData) => (
               <tr
                 key={element.id}
                 className="hover:bg-base-200/30 transition-colors duration-200"
@@ -47,8 +47,13 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
                 <th className="font-mono text-primary">#{element.id}</th>
                 <td className="font-medium">{formatDate(element.fecha)}</td>
                 <td className="max-w-xs truncate">{element.descripcion}</td>
+                  <td className="max-w-xs truncate">{element.cliente.descripcion}</td>
+                     <td className="max-w-xs truncate">{element.auto.modelo}</td>
+                     <td className="max-w-xs truncate">{element.categoria.descripcion}</td>
+                     <td className="max-w-xs truncate">{element.color}</td>
+                      <td className="max-w-xs truncate">{element.placa}</td>
                 <td className="max-w-xs truncate">
-                  {element.categoria.descripcion}
+                  {element.id_pago_categoria}
                 </td>
                 <td className="font-bold text-primary">
                   {new Intl.NumberFormat("es-HN", {
