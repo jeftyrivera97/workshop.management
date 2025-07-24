@@ -65,7 +65,7 @@ export const getDateData = () => {
       return {
         currentName: getMonthName(currentYM),
         previousName: "",
-        previousYearName: "", // ✅ Nuevo campo
+        previousYearName: "", 
         year: now.getFullYear(),
       };
     }
@@ -99,9 +99,9 @@ export const getDateData = () => {
     return {
       currentName: getMonthName(yearMonth),
       previousName: getMonthName(previousYM), // Mes anterior
-      previousYearName: getMonthName(previousYearYM), // ✅ Mismo mes del año anterior
+      previousYearName: getMonthName(previousYearYM), // Mismo mes del año anterior
       year: parseInt(year),
-      previousYear: parseInt(year) - 1, // ✅ Año anterior
+      previousYear: parseInt(year) - 1, // Año anterior
     };
   };
 

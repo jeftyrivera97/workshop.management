@@ -1,6 +1,7 @@
 import { getEmoji, getStatusColor } from "../../../../helpers";
 import { AnalisisMensual } from "../../../../interfaces";
 
+
 interface AnalisisFinancieroProps {
   analisisMensual: AnalisisMensual[];
 }
@@ -28,7 +29,7 @@ export const AnalisisCardGrid = ({ analisisMensual }: AnalisisFinancieroProps) =
                 </div>
               </div>
               <div className={`text-lg sm:text-xl font-bold ${getStatusColor(item.tipo)} shrink-0`}>
-                {item.porcentaje}%
+              {Number(item.porcentaje).toFixed(2)}%
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { InfoInput } from "../../layouts";
-import BarGraphComparisonComponent from "../shared/graphs/BarGraphComparisonComponent";
+import BarGraphComparison from "./components/BarGraphComparison";
 import { DataTable } from "../../layouts";
 import { useEffect, useRef } from "react";
 import { useHomeStore } from "../../../hooks/store/useHomeStore";
@@ -51,27 +51,34 @@ export const HomeIndex = () => {
   return (
     <div className="space-y-6 mt-2">
       <ModuleTab moduleName={moduleTitle} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ml-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 ml-2">
         <InfoInput
           valor={`L. ${totales.ingresosAnualActual.toLocaleString("es-HN", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}`}
-          descripcion={`Total Ingreso del Año ${currentYear}`}
+          descripcion={`Total Ingresos del Año ${currentYear}`}
+        />
+         <InfoInput
+          valor={`L. ${totales.egresosAnualActual.toLocaleString("es-HN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`}
+          descripcion={`Total Egresos del Año ${currentYear}`}
         />
         <InfoInput
           valor={`L. ${totales.comprasAnualActual.toLocaleString("es-HN", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}`}
-          descripcion={`Total Compras del Año ${currentYear}`}
+          descripcion={`Compras del Año ${currentYear}`}
         />
         <InfoInput
           valor={`L. ${totales.gastosAnualActual.toLocaleString("es-HN", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}`}
-          descripcion={`Total Gastos del Año ${currentYear}`}
+          descripcion={`Gastos del Año ${currentYear}`}
         />
         <InfoBalance
           valor={balances.balance_anual}
@@ -93,6 +100,7 @@ export const HomeIndex = () => {
 
         <EficienciaCard
           eficiencia_compras={eficiencia.eficiencia_compras}
+          color_eficiencia={eficiencia.color_eficiencia}
           recomendacion={eficiencia.recomendacion}
         />
       </div>
@@ -125,7 +133,7 @@ export const HomeIndex = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 ml-2">
-        <BarGraphComparisonComponent data={chartData} />
+        <BarGraphComparison data={chartData} />
 
         <DataTable
           data={tiposIngresosAnual}

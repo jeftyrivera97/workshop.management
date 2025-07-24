@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// ✅ Definir interfaces para el estado de autenticación
+// Definir interfaces para el estado de autenticación
 interface User {
   id: number;
   name: string;

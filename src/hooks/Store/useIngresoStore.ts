@@ -55,7 +55,7 @@ export const useIngresoStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como IngresoData
+      // El payload ya está tipado como IngresoData
       dispatch(onIngresoFill(resp.data as IngresoData));
     } catch (error) {
       const apiError = error as ApiError;
@@ -77,7 +77,7 @@ export const useIngresoStore = () => {
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      // ✅ Construir URL con filtro
+      //  Construir URL con filtro
       let url = `/${module}?page=${page}`;
       if (
         dateParam !== undefined &&

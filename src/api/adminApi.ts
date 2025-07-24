@@ -3,9 +3,11 @@ import axios from 'axios';
 
 //const { VITE_API_URL } = getEnvVariables()
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 
 const adminApi = axios.create({
-    baseURL: 'http://api.workshop.test/api', // Laravel API URL
+    baseURL: baseURL, // Laravel API URL
     withCredentials: true, // 
 });
 

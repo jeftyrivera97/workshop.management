@@ -55,7 +55,7 @@ export const useCompraStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como CompraData
+      //   payload ya está tipado como CompraData
       dispatch(onCompraFill(resp.data as CompraData));
     } catch (error) {
       const apiError = error as ApiError;
@@ -77,7 +77,7 @@ export const useCompraStore = () => {
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      // ✅ Construir URL con filtro
+      //Construir URL con filtro
       let url = `/${module}?page=${page}`;
       if (
         dateParam !== undefined &&

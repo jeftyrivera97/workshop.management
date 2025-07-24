@@ -10,7 +10,7 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
   const { nextPageLoading, tableData, pagination, loading, tableHeaders } =
     usePlanillaStore();
 
-  // ✅ Pasar el mes seleccionado en la paginación
+  //  Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
     nextPageLoading(page, "planilla", selectedMonth); // Agregar filtro
   };

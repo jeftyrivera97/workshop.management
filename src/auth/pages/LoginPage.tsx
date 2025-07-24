@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAuthStore, useForm } from "../../hooks";
 import Swal from "sweetalert2";
+import logo from "../../../public/logo-horizontal.svg"; // Ajusta la ruta según tu estructura
 
 const loginFormFields = {
   loginEmail: "",
@@ -41,6 +42,14 @@ export const LoginPage = () => {
     <div className="flex justify-center">
       <div className="card w-96 bg-base-100 shadow-xl mt-20 mb-20">
         <div className="card-body">
+          <div className="flex justify-center mb-4">
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-12 object-contain"
+              style={{ maxWidth: "80%" }}
+            />
+          </div>
           <h2 className="card-title">Acceder a Sistema</h2>
           <form onSubmit={loginSubmit}>
             <div className="items-center mt-2">

@@ -58,7 +58,7 @@ export const usePlanillaStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como PlanillaData
+      // payload ya está tipado como PlanillaData
       dispatch(onPlanillaFill(resp.data as PlanillaData));
     } catch (error) {
       const apiError = error as ApiError;
@@ -80,7 +80,7 @@ export const usePlanillaStore = () => {
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      // ✅ Construir URL con filtro
+      //  Construir URL con filtro
       let url = `/${module}?page=${page}`;
       if (
         dateParam !== undefined &&

@@ -45,7 +45,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export default function BarGraphComparisonComponent({ data }: { data: ChartData[] }) {
+export default function BarGraphComparison({ data }: { data: ChartData[] }) {
   const { currentYear } = getDateData();
 
   return (

@@ -55,7 +55,7 @@ export const useGastoStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como GastoData
+      // payload ya está tipado como GastoData
       dispatch(onGastoFill(resp.data as GastoData));
     } catch (error) {
       const apiError = error as ApiError;
@@ -77,7 +77,7 @@ export const useGastoStore = () => {
   ): Promise<void> => {
     try {
       const token = localStorage.getItem("token");
-      // ✅ Construir URL con filtro
+      //  Construir URL con filtro
       let url = `/${module}?page=${page}`;
       if (
         dateParam !== undefined &&

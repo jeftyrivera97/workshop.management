@@ -1,9 +1,9 @@
-import React from 'react'
+
 import { FaBalanceScale, FaShoppingCart, FaMoneyBillWave } from "react-icons/fa";
 
 interface EficienciaCardProps {
-  eficiencia_compras: "compras_dominantes" | "gastos_dominantes" | "equilibrado";
-  color_eficiencia?: "success" | "warning" | "info";
+  eficiencia_compras: string;
+  color_eficiencia?: string;
   recomendacion: string;
 }
 

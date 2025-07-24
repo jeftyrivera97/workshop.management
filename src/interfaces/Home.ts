@@ -37,6 +37,7 @@ export interface HomeDataGrafica {
 export interface HomeEficiencia {
     eficiencia_compras: string;
     color_eficiencia:   string;
+    recomendacion:      string;
 }
 
 export interface HomePorcentajes {

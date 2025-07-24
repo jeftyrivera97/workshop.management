@@ -38,7 +38,7 @@ export const AnalisisHeader = ({
         <span className="badge badge-info gap-1 text-xs">
           ℹ️{" "}
           {analisisMensual.filter((item) => item.tipo === "info").length}
-          <span className="hidden sm:inline ml-1">Información</span>
+          <span className="hidden sm:inline ml-1">N/A Información</span>
         </span>
       </div>
     </div>

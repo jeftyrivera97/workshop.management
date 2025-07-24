@@ -52,6 +52,7 @@ const initialState: HomeState = {
   eficiencia: {
     eficiencia_compras: "0%",
     color_eficiencia: "",
+    recomendacion: "",
   },
   rentabilidad: {
     clasificacion_rentabilidad: "",

@@ -46,7 +46,7 @@ export const useHomeStore = () => {
 
       console.log("API Response:", resp.data);
 
-      // ✅ El payload ya está tipado como HomeData
+      //  El payload ya está tipado como HomeData
       dispatch(onHomeFill(resp.data as HomeData));
     } catch (error) {
       const apiError = error as ApiError;
