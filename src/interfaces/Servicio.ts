@@ -3,19 +3,19 @@ export interface ServicioData {
   links:                ServicioLinks;
   meta:                 ServicioMeta;
   tableHeaders:         { [key: string]: string };
-  counter:              number;
+  contador:              number;
   moduleName:           string;
   moduleTitle:          string;
   totalMes:             string;
   totalAnual:           string;
   dataGraficaMes:       ServicioDataGraficaMes[];
   totalMesYearAnterior: string;
-  tiposMes:             SericioInfoTableData[];
-  categoriasMes:        SericioInfoTableData[];
+  tiposMes:             ServicioInfoTableData[];
+  categoriasMes:        ServicioInfoTableData[];
   analisisMensual:      string;
 }
 
-export interface SericioInfoTableData {
+export interface ServicioInfoTableData {
   descripcion: string;
   total:       number;
   porcentaje:  string;
