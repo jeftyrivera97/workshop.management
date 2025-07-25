@@ -21,7 +21,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-base-300 p-4 border border-accent/50 rounded-box shadow-2xl backdrop-blur-sm">
-        <p className="font-semibold text-gray-200 mb-2 text-sm">{label}</p>
+         <p className="font-semibold text-gray-700 dark:text-gray-200 mb-2 text-sm">{label}</p>
         <p className="text-accent font-bold text-lg">
           {payload[0].value}
         </p>
@@ -86,7 +86,7 @@ export default function LineChartComponent({ data }: { data: ChartData[] }) {
     >
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-2xl font-bold text-gray-200 mb-1">
+           <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-200 mb-1">
             📉 Gráfica Mensual
           </h3>
           <p className="text-gray-400 text-sm">Tendencia mensual</p>
