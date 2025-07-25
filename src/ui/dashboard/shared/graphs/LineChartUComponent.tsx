@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import {
   CartesianGrid,
   XAxis,
@@ -22,7 +23,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <div className="bg-base-300 p-4 border border-accent/50 rounded-box shadow-2xl backdrop-blur-sm">
         <p className="font-semibold text-gray-200 mb-2 text-sm">{label}</p>
         <p className="text-accent font-bold text-lg">
-         {payload[0].value} Unidades
+          {payload[0].value}
         </p>
       </div>
     );
@@ -30,15 +31,63 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export default function LineChartUComponent({ data }: { data: ChartData[] }) {
+export default function LineChartComponent({ data }: { data: ChartData[] }) {
   const { currentYear } = getDateData();
 
+  // Estados para colores adaptados al theme
+  const [colors, setColors] = useState({
+    stroke: "hsl(var(--a))",
+    gradientStart: 0.7,
+    gradientEnd: 0.05,
+    axis: "#222",
+    gridStroke: "rgba(156, 163, 175, 0.2)",
+    dotFill: "#f3f4f6",
+    dotStroke: "hsl(var(--a))",
+  });
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: light)");
+    const applyColors = () => {
+      if (mq.matches) {
+        // **Light mode**: usamos tonos más oscuros y opacidades mayores
+        setColors({
+          stroke: "#2563EB", // blue-600
+          gradientStart: 0.5, // más visible
+          gradientEnd: 0.1,
+          axis: "#374151", // gray-700
+          gridStroke: "rgba(107, 114, 128, 0.3)", // gray-500 a 0.3
+          dotFill: "#FFFFFF",
+          dotStroke: "#2563EB",
+        });
+      } else {
+        // **Dark mode**: volvemos a tus valores originales
+        setColors({
+          stroke: "#524E4D", // gray-600
+          gradientStart: 0.7,
+          gradientEnd: 0.05,
+          axis: "#DDD",
+          gridStroke: "rgba(156, 163, 175, 0.2)",
+          dotFill: "#f3f4f6",
+          dotStroke: "hsl(var(--a))",
+        });
+      }
+    };
+    mq.addEventListener("change", applyColors);
+    applyColors();
+    return () => {
+      mq.removeEventListener("change", applyColors);
+    };
+  }, []);
+
   return (
-    <div className="bg-base-100 p-6 rounded-box shadow-2xl border border-gray-600/20 hover:shadow-2xl transition-all duration-300">
+    <div
+      className="bg-base-100 p-6 rounded-box shadow-2xl border border-gray-600/20 transition-all duration-300"
+      style={{ background: "var(--chart-bg)" }}
+    >
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-2xl font-bold text-gray-200 mb-1">
-            📉 Grafica Mensual
+            📉 Gráfica Mensual
           </h3>
           <p className="text-gray-400 text-sm">Tendencia mensual</p>
         </div>
@@ -59,67 +108,74 @@ export default function LineChartUComponent({ data }: { data: ChartData[] }) {
         >
           <defs>
             <linearGradient id="accentGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--a))" stopOpacity={0.7} />
               <stop
-                offset="100%"
-                stopColor="hsl(var(--a))"
-                stopOpacity={0.05}
+                offset="0%"
+                stopColor={colors.stroke}
+                stopOpacity={colors.gradientStart}
               />
-            </linearGradient>
-            <linearGradient id="secondaryGlow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="hsl(var(--s))" stopOpacity={0.5} />
               <stop
                 offset="100%"
-                stopColor="hsl(var(--s))"
-                stopOpacity={0.05}
+                stopColor={colors.stroke}
+                stopOpacity={colors.gradientEnd}
               />
             </linearGradient>
           </defs>
+
           <CartesianGrid
             strokeDasharray="2 4"
-            stroke="rgba(156, 163, 175, 0.2)"
+            stroke={colors.gridStroke}
             vertical={false}
           />
+
           <XAxis
             dataKey="descripcion"
-            tick={{ fontSize: 12, fill: "#d1d5db", fontWeight: "400" }}
-            axisLine={{ stroke: "rgba(156, 163, 175, 0.3)" }}
-            tickLine={{ stroke: "rgba(156, 163, 175, 0.3)" }}
+            tick={{
+              fontSize: 12,
+              fill: colors.axis,
+              fontWeight: "400",
+            }}
+            axisLine={{ stroke: colors.axis }}
+            tickLine={{ stroke: colors.axis }}
           />
+
           <YAxis
-            tick={{ fontSize: 11, fill: "#d1d5db", fontWeight: "400" }}
-            axisLine={{ stroke: "rgba(156, 163, 175, 0.3)" }}
-            tickLine={{ stroke: "rgba(156, 163, 175, 0.3)" }}
-            tickFormatter={(value) =>
-             value
-            }
+            tick={{
+              fontSize: 11,
+              fill: colors.axis,
+              fontWeight: "400",
+            }}
+            axisLine={{ stroke: colors.axis }}
+            tickLine={{ stroke: colors.axis }}
           />
+
           <Tooltip content={<CustomTooltip />} />
+
           <Legend
             wrapperStyle={{
-              color: "#d1d5db",
+              color: colors.axis,
               fontSize: "13px",
               fontWeight: "400",
             }}
           />
+
           <Area
             type="monotone"
             dataKey="total"
-            stroke="hsl(var(--a))"
+            stroke={colors.stroke}
             strokeWidth={3}
             fill="url(#accentGlow)"
             dot={{
-              fill: "#f3f4f6",
+              fill: colors.dotFill,
               strokeWidth: 2,
               r: 5,
-              stroke: "hsl(var(--a))",
+              stroke: colors.dotStroke,
             }}
             activeDot={{
               r: 7,
-              stroke: "hsl(var(--a))",
+              stroke: colors.dotStroke,
               strokeWidth: 3,
-              fill: "#f9fafb",
-              filter: "drop-shadow(0 0 8px hsl(var(--a)))",
+              fill: colors.dotFill,
+              filter: `drop-shadow(0 0 8px ${colors.stroke})`,
             }}
             name="💎 Ingresos Totales"
           />
