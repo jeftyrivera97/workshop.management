@@ -1,5 +1,8 @@
 export interface InfoTableData {
   descripcion: string;
-  total:       number;
-  porcentaje:  string;
+  unidades?: number;
+  total: number;
+  porcentaje?: string;
 }
+
+

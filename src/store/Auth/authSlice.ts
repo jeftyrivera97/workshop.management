@@ -13,7 +13,7 @@ interface AuthState {
   errorMessage: string | null;
 }
 const initialState: AuthState = {
-  status: "not-authenticated",
+  status: "checking",
   user: null,
   errorMessage: null,
 };
@@ -38,6 +38,7 @@ export const authSlice = createSlice({
       state.errorMessage = null;
     },
     onLoginWindow: (state) => {
+      state.status = "not-authenticated";
       state.user = null;
       state.errorMessage = null;
     },

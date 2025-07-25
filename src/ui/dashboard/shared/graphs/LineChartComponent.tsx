@@ -9,7 +9,7 @@ import {
   Area,
   ComposedChart,
 } from "recharts";
-import { getDateData } from "../../../helpers";
+import { getDateData } from "../../../../helpers";
 
 interface ChartData {
   descripcion: string;

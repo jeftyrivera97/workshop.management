@@ -1,110 +1,124 @@
 export interface ServicioData {
-  data: ServicioTableData[];
-  links: ServicioLinks;
-  meta: ServicioMeta;
-  tableHeaders: { [key: string]: string };
-  contador: number;
-  moduleName: string;
-  moduleTitle: string;
-  totalMes: string;
-  totalAnual: string;
-  dataGraficaMes: ServicioDataGraficaMes[];
+  data:                 ServicioTableData[];
+  links:                ServicioLinks;
+  meta:                 ServicioMeta;
+  tableHeaders:         { [key: string]: string };
+  counter:              number;
+  moduleName:           string;
+  moduleTitle:          string;
+  totalMes:             string;
+  totalAnual:           string;
+  dataGraficaMes:       ServicioDataGraficaMes[];
   totalMesYearAnterior: string;
-  tiposMes: ServicioInfoTableData[];
-  categoriasMes: ServicioInfoTableData[];
-  analisisMensual: string;
+  tiposMes:             SericioInfoTableData[];
+  categoriasMes:        SericioInfoTableData[];
+  analisisMensual:      string;
 }
 
-export interface ServicioInfoTableData {
+export interface SericioInfoTableData {
   descripcion: string;
-  total: number;
-  porcentaje: string;
+  total:       number;
+  porcentaje:  string;
+  unidades?:   number;
 }
 
 export interface ServicioTableData {
-  id: number;
-  fecha: Date;
-  descripcion: string;
-  cliente: ServicioCliente;
-  auto: Auto;
-  categoria: ServicioCategoria;
-  color: string;
-  placa: string;
-  total: number;
-  id_pago_categoria: number;
-  estado: ServicioEstado;
-  usuario: ServicioUsuario;
+  id:            number;
+  fecha:         Date;
+  descripcion:   string;
+  cliente:       ServicioCliente;
+  auto:          ServicioAuto;
+  categoria:     ServicioDataCategoria;
+  color:         string;
+  placa:         string;
+  total:         number;
+  pagoCategoria: ServicioEstado;
+  estado:        ServicioEstado;
+  usuario:       ServicioUsuario;
+  created_at:    Date;
+  updated_at:    Date;
+}
+
+export interface ServicioAuto {
+  id:         number;
+  marca:      ServicioAutoCategoriaMarca;
+  modelo:     string;
+  year:       string;
+  base:       string;
+  traccion:   string;
+  cilindraje: string;
+  combustion: string;
+  categoria:  ServicioAutoCategoriaMarca;
+  estado:     ServicioEstado;
+  usuario:    ServicioUsuario;
   created_at: Date;
   updated_at: Date;
 }
 
-export interface ServicioCategoria {
-  id: number;
+export interface ServicioAutoCategoriaMarca {
+  id:          number;
   descripcion: string;
-  created_at: null;
-  updated_at: null;
-}
-
-export interface Auto {
-    id:         number;
-    modelo:     string;
-    year:       string;
-    base:       string;
-    traccion:   string;
-    cilindraje: string;
-    combustion: string;
-    created_at: Date;
-    updated_at: Date;
-}
-
-export interface ServicioCliente {
-  id: number;
-  codigo_cliente: string;
-  descripcion: string;
-  telefono: string;
-  created_at: null;
-  updated_at: null;
+  id_estado:   number;
+  id_usuario:  number;
+  created_at:  null;
+  updated_at:  null;
 }
 
 export interface ServicioEstado {
-  id: number;
+  id:          number;
   descripcion: string;
 }
 
 export interface ServicioUsuario {
-  id: number;
-  name: string;
-  email: string;
+  id:         number;
+  name:       string;
+  email:      string;
   created_at: null;
   updated_at: null;
 }
 
+export interface ServicioDataCategoria {
+  id:          number;
+  descripcion: string;
+  created_at:  null;
+  updated_at:  null;
+}
+
+export interface ServicioCliente {
+  id:             number;
+  codigo_cliente: string;
+  descripcion:    string;
+  telefono:       string;
+  created_at:     null;
+  updated_at:     null;
+}
+
 export interface ServicioDataGraficaMes {
   descripcion: string;
-  total: number;
-  mes_numero: number;
+  total:       number;
+  mes_numero:  number;
 }
 
 export interface ServicioLinks {
   first: string;
-  last: string;
-  prev: null;
-  next: string;
+  last:  string;
+  prev:  null;
+  next:  null;
 }
 
 export interface ServicioMeta {
   current_page: number;
-  from: number;
-  last_page: number;
-  links: ServicioLink[];
-  path: string;
-  per_page: number;
-  to: number;
-  total: number;
+  from:         number;
+  last_page:    number;
+  links:        ServicioLink[];
+  path:         string;
+  per_page:     number;
+  to:           number;
+  total:        number;
 }
 
 export interface ServicioLink {
-  url: null | string;
-  label: string;
+  url:    null | string;
+  label:  string;
   active: boolean;
 }

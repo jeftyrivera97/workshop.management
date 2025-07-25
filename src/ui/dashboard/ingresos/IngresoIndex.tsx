@@ -3,7 +3,7 @@ import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
 import { AnalisisFinanciero } from "./../shared/analisis/AnalisisFinanciero"; 
 import { InfoInput } from "../../layouts";
-import LineChartComponent from "../shared/LineChartComponent";
+import LineChartComponent from "../shared/graphs/LineChartComponent";
 import { DataTable } from "../../layouts";
 import { useEffect, useRef, useState } from "react";
 import { MonthDateInput } from "./../shared/MonthDateInput";

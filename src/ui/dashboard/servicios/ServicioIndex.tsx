@@ -2,11 +2,12 @@ import { useServicioStore } from "../../../hooks";
 import { ModuleTab } from "../../layouts/components/ModuleTab";
 import { IndexTable } from "./components/IndexTable";
 import { InfoInput } from "../../layouts";
-import LineChartComponent from "../shared/LineChartComponent";
 import { DataTable } from "../../layouts";
 import { useEffect, useRef, useState } from "react";
 import { MonthDateInput } from "../shared/MonthDateInput";
 import { getDateData } from "../../../helpers/getDateData";
+import { DataUnidadTable } from "../shared/DataUnidadTable";
+import LineChartUComponent from "../shared/graphs/LineChartUComponent";
 
 export const ServicioIndex = () => {
   const {
@@ -83,13 +84,13 @@ export const ServicioIndex = () => {
         />
       </div>
       {/* Gráfico de líneas */}
-      <LineChartComponent data={dataGraficaMes} />
+      <LineChartUComponent data={dataGraficaMes} />
       {/* Tablas de datos */}
       <div className="space-y-6">
         {" "}
-        <DataTable
+        <DataUnidadTable
           data={tiposMes}
-          titulo={`Servicios por Tipos de Autos - ${selectedMonthName}`}
+          titulo={`Servicios por Marcas y Modelos de Autos - ${selectedMonthName}`}
         />
         <DataTable
           data={categoriasMes}

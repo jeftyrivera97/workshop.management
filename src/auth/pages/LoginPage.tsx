@@ -30,6 +30,9 @@ export const LoginPage = () => {
     }
   }, [errorMessage]);
 
+
+  
+
   return (
     <div className="flex justify-center">
       <div className="card w-96 bg-base-100 shadow-xl mt-20 mb-20">

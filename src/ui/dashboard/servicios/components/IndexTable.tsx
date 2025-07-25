@@ -12,7 +12,7 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
 
   //  Pasar el mes seleccionado en la paginación
   const handlePageChange = (page: number) => {
-    nextPageLoading(page, "gasto", selectedMonth); // Agregar filtro
+    nextPageLoading(page, "servicio", selectedMonth); // Agregar filtro
   };
 
   const { formatDate } = getDateData();
@@ -48,12 +48,12 @@ export const IndexTable = ({ selectedMonth }: IndexTableProps) => {
                 <td className="font-medium">{formatDate(element.fecha)}</td>
                 <td className="max-w-xs truncate">{element.descripcion}</td>
                   <td className="max-w-xs truncate">{element.cliente.descripcion}</td>
-                     <td className="max-w-xs truncate">{element.auto.modelo}</td>
+                     <td className="max-w-xs truncate"> {element.auto.marca.descripcion} {element.auto.modelo} {element.auto.year}</td>
                      <td className="max-w-xs truncate">{element.categoria.descripcion}</td>
                      <td className="max-w-xs truncate">{element.color}</td>
                       <td className="max-w-xs truncate">{element.placa}</td>
                 <td className="max-w-xs truncate">
-                  {element.id_pago_categoria}
+                  {element.pagoCategoria.descripcion}
                 </td>
                 <td className="font-bold text-primary">
                   {new Intl.NumberFormat("es-HN", {
